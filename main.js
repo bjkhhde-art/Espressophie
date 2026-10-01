@@ -1,104 +1,117 @@
-/* Espressophie – Animationen und Interaktion (ohne externe Bibliotheken) */
+/* Espressophie – Website: Animationen und Interaktion (ohne externe Bibliotheken) */
 (function () {
   "use strict";
 
   var root = document.documentElement;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasIO = "IntersectionObserver" in window;
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* egal */ } }
+  };
 
-  /* ---------- Manometer aufbauen ---------- */
-  var SVGNS = "http://www.w3.org/2000/svg";
-  function el(tag, attrs) {
-    var n = document.createElementNS(SVGNS, tag);
-    for (var k in attrs) n.setAttribute(k, attrs[k]);
-    return n;
+  /* ---------- Akzentfarbe (wie in der App, merkt sich die Wahl) ---------- */
+  function setAccent(id) {
+    if (id && id !== "caramel") root.setAttribute("data-accent", id); else root.removeAttribute("data-accent");
+    $$(".accent-dot").forEach(function (b) {
+      var on = b.dataset.accent === (id || "caramel");
+      b.setAttribute("aria-checked", on);
+      if (on) { var n = $(".accent-name"); if (n) n.textContent = b.dataset.name; }
+    });
   }
-  function buildGauge(g) {
-    var svg = el("svg", { viewBox: "0 0 200 200", "aria-hidden": "true" });
-    svg.appendChild(el("circle", { cx: 100, cy: 100, r: 97, fill: "url(#bezel)" }));
-    svg.appendChild(el("circle", { cx: 100, cy: 100, r: 89, fill: "url(#dial)" }));
-    // Skalenstriche über 270°
-    for (var i = 0; i <= 20; i++) {
-      var a = (135 + i * 13.5) * Math.PI / 180;
-      var major = i % 5 === 0;
-      var r1 = major ? 60 : 64, r2 = 70;
-      svg.appendChild(el("line", {
-        class: "tick" + (major ? " major" : ""),
-        x1: 100 + r1 * Math.cos(a), y1: 100 + r1 * Math.sin(a),
-        x2: 100 + r2 * Math.cos(a), y2: 100 + r2 * Math.sin(a)
-      }));
-    }
-    var arc = "M44.85 155.15 A78 78 0 1 1 155.15 155.15";
-    svg.appendChild(el("path", { class: "g-track", d: arc }));
-    svg.appendChild(el("path", { class: "val", d: arc, pathLength: 100 }));
-    var needle = el("g", { class: "needle" });
-    needle.appendChild(el("line", { x1: 100, y1: 46, x2: 100, y2: 26 }));
-    svg.appendChild(needle);
-    g.insertBefore(svg, g.firstChild);
-  }
-  function runGauge(g) {
-    if (g._done) return; g._done = true;
-    var v = parseFloat(g.dataset.value), max = parseFloat(g.dataset.max);
-    var pct = Math.min(v / max, 1);
-    $(".val", g).style.strokeDashoffset = 100 - pct * 100;
-    $(".needle", g).style.transform = "rotate(" + (-135 + 270 * pct) + "deg)";
-    var out = $(".g-read b", g);
-    if (reduce) { out.textContent = v; return; }
-    var t0 = performance.now(), dur = 1700;
-    (function step(t) {
-      var k = Math.min((t - t0) / dur, 1);
-      var e = 1 - Math.pow(1 - k, 3);
-      out.textContent = Math.round(v * e);
-      if (k < 1) requestAnimationFrame(step);
-    })(t0);
-  }
-  $$(".gauge").forEach(function (g) { buildGauge(g); $(".g-read b", g).textContent = "0"; });
+  setAccent(store.get("ep_accent") || "caramel");
+  $$(".accent-dot").forEach(function (b) {
+    b.addEventListener("click", function () { setAccent(b.dataset.accent); store.set("ep_accent", b.dataset.accent); });
+  });
 
   /* ---------- Einblenden beim Scrollen ---------- */
+  var handlers = [];
   function onShow(n) {
     n.classList.add("in");
-    if (n.classList.contains("gauge")) setTimeout(function () { runGauge(n); }, 150);
-    if (n.classList.contains("heatup")) setTimeout(function () { n.classList.add("done"); }, reduce ? 0 : 2700);
+    handlers.forEach(function (h) { if (n.matches(h.sel)) h.fn(n); });
   }
-  var revealables = $$("[data-reveal], .fan");
-  if (reduce || !("IntersectionObserver" in window)) {
-    revealables.forEach(onShow);
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { onShow(e.target); io.unobserve(e.target); }
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
-    revealables.forEach(function (n) { io.observe(n); });
-  }
+  function whenShown(sel, fn) { handlers.push({ sel: sel, fn: fn }); }
 
   /* ---------- Hero-Intro ---------- */
   requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add("ready"); }); });
 
+  /* ---------- Statement: Wort für Wort aufhellen ---------- */
+  var words = [];
+  var statement = $("[data-words]");
+  if (statement && !reduce) {
+    statement.innerHTML = statement.textContent.trim().split(/\s+/).map(function (w) { return '<span class="w">' + w + "</span>"; }).join(" ");
+    words = $$(".w", statement);
+  }
+
   /* ---------- Sticky-Story: Bild wechselt mit dem Schritt ---------- */
-  var steps = $$(".step");
-  var screens = $$(".screens img");
-  var dots = $$(".story-dots i");
+  var steps = $$(".step"), screens = $$(".screens picture"), dots = $$(".dots i");
   function setStep(i) {
     steps.forEach(function (s, k) { s.classList.toggle("active", k === i); });
     screens.forEach(function (s, k) { s.classList.toggle("active", k === i); });
     dots.forEach(function (s, k) { s.classList.toggle("on", k === i); });
   }
-  if ("IntersectionObserver" in window) {
+
+  /* ---------- KI-Barista: Nachrichten nacheinander ---------- */
+  whenShown("[data-chat]", function (chat) {
+    var msgs = $$("[data-msg]", chat), t = 300;
+    msgs.forEach(function (m) {
+      var typing = m.classList.contains("typing");
+      setTimeout(function () { m.classList.add("show"); }, reduce ? 0 : t);
+      t += typing ? 1400 : 900;
+      if (typing) setTimeout(function () { m.classList.add("gone"); }, reduce ? 0 : t - 150);
+    });
+  });
+
+  /* ---------- Maschine: Schalter wie in der App ---------- */
+  var card = $("[data-power-card]");
+  if (card) {
+    var sw = $(".switch", card), status = $("[data-power-status]", card), bar = $(".bar i", card);
+    var timer = null, touched = false;
+    var render = function (lamp, pct, text) {
+      card.dataset.lamp = lamp;
+      sw.setAttribute("aria-checked", lamp !== "off");
+      sw.setAttribute("aria-label", "Maschine " + (lamp === "off" ? "einschalten" : "ausschalten") + " (Vorführung)");
+      bar.style.width = pct + "%";
+      status.textContent = text;
+    };
+    var turnOn = function () {
+      var pct = 0;
+      clearInterval(timer);
+      if (reduce) { render("warm", 100, "Vorgewärmt – bereit für den Shot"); return; }
+      render("heat", 0, "Heizt auf · 0 %");
+      timer = setInterval(function () {
+        pct = Math.min(100, pct + 2.5);
+        if (pct >= 100) { clearInterval(timer); render("warm", 100, "Vorgewärmt – bereit für den Shot"); }
+        else render("heat", pct, "Heizt auf · " + Math.round(pct) + " %");
+      }, 110);
+    };
+    var turnOff = function () { clearInterval(timer); render("off", 0, "Aus"); };
+    sw.addEventListener("click", function () { touched = true; if (card.dataset.lamp === "off") turnOn(); else turnOff(); });
+    whenShown(".machine-demo", function () { setTimeout(function () { if (!touched && card.dataset.lamp === "off") turnOn(); }, 700); });
+  }
+
+  /* ---------- Beobachter ---------- */
+  var revealables = $$("[data-reveal]");
+  if (reduce || !hasIO) {
+    revealables.forEach(onShow);
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { onShow(e.target); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
+    revealables.forEach(function (n) { io.observe(n); });
+  }
+  if (hasIO) {
     var so = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) setStep(+e.target.dataset.step); });
     }, { rootMargin: "-45% 0px -45% 0px" });
     steps.forEach(function (s) { so.observe(s); });
-  }
 
-  /* ---------- Aktiver Menüpunkt ---------- */
-  var navLinks = $$(".nav a[href^='#']");
-  if (navLinks.length && "IntersectionObserver" in window) {
+    var navLinks = $$(".nav a[href^='#']");
     var no = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        navLinks.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
+        if (e.isIntersecting) navLinks.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
       });
     }, { rootMargin: "-40% 0px -55% 0px" });
     navLinks.forEach(function (a) { var t = $(a.getAttribute("href")); if (t) no.observe(t); });
@@ -107,118 +120,53 @@
   /* ---------- Menü (Handy) ---------- */
   var burger = $(".burger"), nav = $("#nav");
   if (burger && nav) {
-    burger.addEventListener("click", function () {
-      var open = nav.classList.toggle("open");
+    var setMenu = function (open) {
+      nav.classList.toggle("open", open);
+      document.body.classList.toggle("nav-open", open);
       burger.setAttribute("aria-expanded", open);
       burger.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
-    });
-    $$("a", nav).forEach(function (a) {
-      a.addEventListener("click", function () { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); });
-    });
+    };
+    burger.addEventListener("click", function () { setMenu(!nav.classList.contains("open")); });
+    $$("a", nav).forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
   }
 
-  /* ---------- Karten: Lichtpunkt folgt der Maus ---------- */
-  $$(".card").forEach(function (c) {
-    c.addEventListener("pointermove", function (e) {
-      var r = c.getBoundingClientRect();
-      c.style.setProperty("--mx", (e.clientX - r.left) + "px");
-      c.style.setProperty("--my", (e.clientY - r.top) + "px");
-    });
-  });
-
   /* ---------- FAQ weich auf- und zuklappen ---------- */
-  $$(".faq details").forEach(function (d) {
+  $$(".faq-list details").forEach(function (d) {
     var sum = $("summary", d), ans = $(".ans", d);
     if (!ans || !ans.animate || reduce) return;
     sum.addEventListener("click", function (e) {
       e.preventDefault();
       if (d._anim) d._anim.cancel();
       if (d.open) {
-        var h = ans.offsetHeight;
-        d._anim = ans.animate([{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)" });
+        d._anim = ans.animate([{ height: ans.offsetHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 300, easing: "cubic-bezier(.2,.8,.2,1)" });
         d._anim.onfinish = function () { d.open = false; d._anim = null; };
       } else {
         d.open = true;
-        var h2 = ans.offsetHeight;
-        d._anim = ans.animate([{ height: "0px", opacity: 0 }, { height: h2 + "px", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" });
+        d._anim = ans.animate([{ height: "0px", opacity: 0 }, { height: ans.offsetHeight + "px", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.2,.9,.25,1.05)" });
         d._anim.onfinish = function () { d._anim = null; };
       }
     });
   });
 
-  /* ---------- Scroll-Effekte: Fortschritt, Kopfzeile, Parallaxe, Handy-Neigung ---------- */
-  var bar = $(".progress span");
-  var header = $(".top");
-  var par = $$("[data-parallax]").map(function (n) {
-    return { n: n, s: parseFloat(n.dataset.parallax), spin: parseFloat(n.dataset.spin || 0), ref: n.closest("section") || n.parentNode };
-  });
-  var tilt = $("[data-tilt]");
-  var mx = 0, my = 0;
+  /* ---------- Scroll-Effekte: Kopfzeile, Hero-Handys, Statement ---------- */
+  var header = $(".top"), stage = $(".hero-stage");
   var ticking = false;
-
   function update() {
     ticking = false;
     var y = window.scrollY, vh = window.innerHeight;
-    var max = document.documentElement.scrollHeight - vh;
-    if (bar) bar.style.setProperty("--p", max > 0 ? (y / max).toFixed(4) : 0);
-    if (header) header.classList.toggle("scrolled", y > 10);
+    if (header) header.classList.toggle("scrolled", y > 8);
     if (reduce) return;
-
-    par.forEach(function (p) {
-      var top = p.ref.getBoundingClientRect().top;
-      var off = -top * p.s;
-      p.n.style.transform = "translate3d(0," + off.toFixed(1) + "px,0)" + (p.spin ? " rotate(" + (top * p.spin / 1000).toFixed(1) + "deg)" : "");
-    });
-
-    if (tilt) {
-      var k = Math.min(y / vh, 1);
-      tilt.style.transform =
-        "translateY(" + (k * -30).toFixed(1) + "px) " +
-        "rotateX(" + (k * 16 + my * -6).toFixed(2) + "deg) " +
-        "rotateY(" + (mx * 10).toFixed(2) + "deg) " +
-        "rotateZ(" + (3 - k * 9).toFixed(2) + "deg) " +
-        "scale(" + (1 - k * 0.08).toFixed(3) + ")";
+    if (stage) stage.style.setProperty("--hp", Math.min(Math.max(y / (vh * 0.8), 0), 1).toFixed(3));
+    if (words.length) {
+      var r = statement.getBoundingClientRect();
+      var p = (vh * 0.82 - r.top) / (r.height + vh * 0.3);
+      var lit = Math.round(Math.min(Math.max(p, 0), 1) * words.length);
+      words.forEach(function (w, i) { w.classList.toggle("on", i < lit); });
     }
   }
   function requestUpdate() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener("scroll", requestUpdate, { passive: true });
   window.addEventListener("resize", requestUpdate);
-  if (window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener("pointermove", function (e) {
-      mx = e.clientX / window.innerWidth - 0.5;
-      my = e.clientY / window.innerHeight - 0.5;
-      requestUpdate();
-    }, { passive: true });
-  }
   update();
-
-  /* ---------- Laufband: läuft immer, Scrollen gibt Schwung und Richtung ---------- */
-  var track = $("[data-marquee]");
-  if (track && !reduce) {
-    var x = 0, dir = 1, boost = 0, lastY = window.scrollY, visible = true, half = 0, running = false;
-    var measure = function () { half = track.scrollWidth / 2; };
-    measure(); window.addEventListener("resize", measure);
-    var loop = function () {
-      if (!visible || document.hidden) { running = false; return; } // pausiert, solange nicht sichtbar
-      if (half) {
-        x -= (0.6 + boost) * dir;
-        boost *= 0.92;
-        if (x <= -half) x += half;
-        if (x > 0) x -= half;
-        track.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0)";
-      }
-      requestAnimationFrame(loop);
-    };
-    var start = function () { if (!running && visible && !document.hidden) { running = true; requestAnimationFrame(loop); } };
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; start(); }).observe(track);
-    }
-    document.addEventListener("visibilitychange", start);
-    window.addEventListener("scroll", function () {
-      var dy = window.scrollY - lastY; lastY = window.scrollY;
-      if (dy) dir = dy > 0 ? 1 : -1;
-      boost = Math.min(boost + Math.abs(dy) * 0.25, 22);
-    }, { passive: true });
-    start();
-  }
 })();

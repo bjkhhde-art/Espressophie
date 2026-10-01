@@ -18,3 +18,5 @@ kontakt:
 url: "https://www.espressophie.de"
 exclude:
   - README.md
+include:
+  - .well-known   # App-Verknüpfung für Rezept-Links (assetlinks.json)
