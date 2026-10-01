@@ -1,0 +1,20 @@
+# ==========================================================
+#   KONTAKTDATEN – nur hier anpassen!
+#   Diese Angaben erscheinen automatisch im Impressum und
+#   in der Datenschutzerklärung. GitHub Pages schreibt sie
+#   beim Veröffentlichen fest in die Seiten (1–2 Minuten).
+#   Werte immer in "Anführungszeichen" lassen.
+# ==========================================================
+
+kontakt:
+  name:    "Benjamin Kupczyk"
+  strasse: "Kanzleistraße 4"
+  plzOrt:  "22609 Hamburg"
+  land:    "Deutschland"
+  email:   "contact@espressophie.de"
+
+
+# ---------- ab hier nichts ändern ----------
+url: "https://www.espressophie.de"
+exclude:
+  - README.md

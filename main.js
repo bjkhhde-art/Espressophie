@@ -195,19 +195,12 @@
   /* ---------- Laufband: läuft immer, Scrollen gibt Schwung und Richtung ---------- */
   var track = $("[data-marquee]");
   if (track && !reduce) {
-    var x = 0, dir = 1, boost = 0, lastY = window.scrollY, visible = true, half = 0;
+    var x = 0, dir = 1, boost = 0, lastY = window.scrollY, visible = true, half = 0, running = false;
     var measure = function () { half = track.scrollWidth / 2; };
     measure(); window.addEventListener("resize", measure);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(track);
-    }
-    window.addEventListener("scroll", function () {
-      var dy = window.scrollY - lastY; lastY = window.scrollY;
-      if (dy) dir = dy > 0 ? 1 : -1;
-      boost = Math.min(boost + Math.abs(dy) * 0.25, 22);
-    }, { passive: true });
-    (function loop() {
-      if (visible && half) {
+    var loop = function () {
+      if (!visible || document.hidden) { running = false; return; } // pausiert, solange nicht sichtbar
+      if (half) {
         x -= (0.6 + boost) * dir;
         boost *= 0.92;
         if (x <= -half) x += half;
@@ -215,6 +208,17 @@
         track.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0)";
       }
       requestAnimationFrame(loop);
-    })();
+    };
+    var start = function () { if (!running && visible && !document.hidden) { running = true; requestAnimationFrame(loop); } };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; start(); }).observe(track);
+    }
+    document.addEventListener("visibilitychange", start);
+    window.addEventListener("scroll", function () {
+      var dy = window.scrollY - lastY; lastY = window.scrollY;
+      if (dy) dir = dy > 0 ? 1 : -1;
+      boost = Math.min(boost + Math.abs(dy) * 0.25, 22);
+    }, { passive: true });
+    start();
   }
 })();

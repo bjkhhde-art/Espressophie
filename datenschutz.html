@@ -1,3 +1,6 @@
+---
+# Kontaktdaten kommen aus _config.yml
+---
 <!doctype html>
 <html lang="de">
 <head>
@@ -5,12 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Datenschutzerklärung – Espressophie</title>
   <meta name="description" content="Datenschutzerklärung der App Espressophie und dieser Website." />
+  <link rel="canonical" href="https://www.espressophie.de/datenschutz.html" />
   <meta name="theme-color" content="#130c08" />
   <link rel="icon" href="assets/favicon.png" />
   <script>document.documentElement.classList.add("js")</script>
-  <link rel="stylesheet" href="style.css?v=2" />
-  <script src="kontakt.js?v=2"></script>
-  <script src="main.js?v=2" defer></script>
+  <link rel="stylesheet" href="style.css?v=3" />
+  <script src="main.js?v=3" defer></script>
 </head>
 <body>
 <div class="progress" aria-hidden="true"><span></span></div>
@@ -37,10 +40,10 @@
 
     <h2 id="verantwortlich">1. Verantwortlicher</h2>
     <p class="card-addr">
-      <span data-kontakt="name"></span><br />
-      <span data-kontakt="strasse"></span><br />
-      <span data-kontakt="plzOrt"></span>, <span data-kontakt="land"></span><br />
-      E-Mail: <span data-kontakt="email"></span>
+      {{ site.kontakt.name }}<br />
+      {{ site.kontakt.strasse }}<br />
+      {{ site.kontakt.plzOrt }}, {{ site.kontakt.land }}<br />
+      E-Mail: <a href="mailto:{{ site.kontakt.email }}">{{ site.kontakt.email }}</a>
     </p>
 
     <h2>2. Grundsatz: Deine Daten bleiben bei dir</h2>
@@ -69,7 +72,7 @@
     <p>Wenn du eine Shelly-Steckdose verbindest, kommuniziert die App direkt mit ihr:</p>
     <ul>
       <li><b>Im Heimnetz:</b> direkt mit der Steckdose über dein WLAN (Status, Stromverbrauch, erkannte Pumpenläufe, Ein-/Ausschalten, Installation des Espressophie-Skripts). Zum Finden der Steckdose kann die App dein lokales Netzwerk nach Shelly-Geräten durchsuchen; dabei verlassen keine Daten dein Heimnetz.</li>
-      <li><b>Unterwegs (nur wenn du einen Cloud-Schlüssel einträgst):</b> über die Shelly Cloud. Dabei werden dein Cloud-Schlüssel, die Geräte-ID und Schaltbefehle an die Server der Shelly Group (Shelly Europe Ltd. bzw. Shelly Group AD, Bulgarien) übertragen. Es gilt die Datenschutzerklärung von Shelly.</li>
+      <li><b>Unterwegs (nur wenn du einen Cloud-Schlüssel einträgst):</b> über die Shelly Cloud. Dabei werden dein Cloud-Schlüssel, die Geräte-ID und Schaltbefehle an die Server der Shelly Group (Shelly Europe Ltd. bzw. Shelly Group AD, Bulgarien) übertragen. Es gilt die <a href="https://www.shelly.com/de/pages/privacy-policy" rel="noopener">Datenschutzerklärung von Shelly</a>.</li>
     </ul>
     <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
 
@@ -123,13 +126,13 @@
     <p>Wenn sich die App oder die rechtlichen Anforderungen ändern, wird diese Datenschutzerklärung angepasst. Es gilt die jeweils hier veröffentlichte Fassung.</p>
 
     <h2 id="kontakt">9. Kontakt</h2>
-    <p>Fragen zum Datenschutz richtest du an: <span data-kontakt="email"></span></p>
+    <p>Fragen zum Datenschutz richtest du an: <a href="mailto:{{ site.kontakt.email }}">{{ site.kontakt.email }}</a></p>
   </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Espressophie</span>
+    <span class="foot-brand"><img src="assets/icon.png" alt="" /> © 2026 Espressophie</span>
     <nav aria-label="Rechtliches"><a href="./">Startseite</a><a href="impressum.html">Impressum</a></nav>
   </div>
 </footer>
