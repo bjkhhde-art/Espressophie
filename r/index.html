@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Espresso-Rezept – Espressophie</title>
+  <meta name="description" content="Ein geteiltes Espresso-Rezept aus der App Espressophie." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:title" content="Espresso-Rezept aus Espressophie" />
+  <meta property="og:description" content="Mahlgrad, Mengen und Zeit – direkt in die App übernehmen." />
+  <meta property="og:image" content="https://www.espressophie.de/assets/og-image.jpg" />
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="/style.css?v=4" />
+  <script src="/main.js?v=4" defer></script>
+  <style>
+    /* Rezeptkarte im Stil der App (gruppierte Liste) */
+    body { background: var(--bg-2); }
+    .rezept .wrap { max-width: 520px; }
+    .rz-card { margin: 18px 0 22px; padding: 22px; border-radius: 22px; background: var(--card); box-shadow: var(--shadow); }
+    .rz-head { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
+    .rz-head .tile { width: 52px; height: 52px; border-radius: 14px; font-size: 30px; }
+    .rz-head h1 { margin: 0; font-size: clamp(26px, 7vw, 32px); line-height: 1.1; }
+    .rz-head small { display: block; margin-top: 3px; color: var(--muted); font-size: 15px; }
+    .rz-big { display: grid; grid-template-columns: repeat(auto-fit, minmax(68px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .rz-big div { display: grid; gap: 2px; padding: 12px 8px; text-align: center; border-radius: 14px; background: var(--fill); }
+    .rz-big span { font-size: 12px; font-weight: 600; color: var(--muted); }
+    .rz-big b { font-size: 22px; letter-spacing: -0.03em; color: var(--accent); }
+    .rz-sub { margin: 16px 0 10px; font-size: 15px; font-weight: 600; color: var(--accent); }
+    .rz-row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-top: 0.5px solid var(--sep); font-size: 16px; }
+    .rz-row span { color: var(--muted); }
+    .rz-row b { text-align: right; font-weight: 500; }
+    .rz-note { margin: 14px 0 0; color: var(--muted); font-style: italic; }
+    .rz-actions { display: grid; gap: 12px; justify-items: center; }
+    .rz-actions .pill { width: 100%; }
+    .rz-hint { margin-top: 26px; color: var(--faint); font-size: 14px; text-align: center; }
+    .rz-empty { text-align: center; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="" /> Espressophie</a>
+    <nav class="subnav" aria-label="Hauptnavigation"><a href="/">Was ist Espressophie?</a></nav>
+  </div>
+</header>
+
+<main class="page rezept">
+  <div class="wrap">
+    <span class="eyebrow" id="rzKicker">Geteiltes Rezept</span>
+    <div id="rzOut">
+      <p class="rz-empty">Rezept wird geladen …</p>
+    </div>
+    <div class="rz-actions" id="rzActions" hidden>
+      <a class="pill" id="rzOpen" href="#">In Espressophie öffnen</a>
+      <a class="more" href="/">Was ist Espressophie?<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></a>
+    </div>
+    <p class="rz-hint">Mahlgrade sind je Mühle verschieden – nimm den Wert als Startpunkt. Dieses Rezept steckt komplett im Link und wird nirgends gespeichert.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand"><img src="/assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches"><a href="/">Startseite</a><a href="/datenschutz.html">Datenschutz</a><a href="/impressum.html">Impressum</a></nav>
+  </div>
+</footer>
+
+<script>
+  // Das Rezept steht hinter dem „#“ im Link (Base64url-kodiertes JSON) –
+  // dieser Teil wird nie an den Server geschickt.
+  (function () {
+    var out = document.getElementById("rzOut");
+    var data = location.hash.replace(/^#/, "");
+    var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+    var num = function (v, d) { return Number(v).toLocaleString("de-DE", { maximumFractionDigits: d }); };
+    var ICONS = {
+      shot: '<path d="M5 8h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 9.5h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M4 21h14"/><path d="M8.5 2.8c-.6.9.6 1.6 0 2.6M12 2.8c-.6.9.6 1.6 0 2.6"/>',
+      bean: '<ellipse cx="12" cy="12" rx="5.6" ry="8.2" transform="rotate(32 12 12)"/><path d="M9.6 5.6c-1.4 3.6 4.2 9.2 4.8 12.8"/>'
+    };
+    var tile = function (name, color) { return '<span class="tile" style="--c:' + color + '"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + ICONS[name] + "</svg></span>"; };
+    var words = {
+      tb: { "-2": "sauer", "-1": "leicht sauer", "0": "ausgewogen", "1": "leicht bitter", "2": "bitter" },
+      ts: { "0": "nicht süß", "1": "etwas süß", "2": "süß", "3": "sehr süß" },
+      tk: { "0": "wässrig", "1": "leichter Körper", "2": "rund", "3": "sirupartig" },
+      tf: { "0": "rauer Abgang", "1": "kurzer Abgang", "2": "angenehmer Abgang", "3": "langer Abgang" }
+    };
+    var r = null;
+    try {
+      var s = data.replace(/-/g, "+").replace(/_/g, "/");
+      while (s.length % 4) s += "=";
+      var bin = atob(s), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      r = JSON.parse(new TextDecoder().decode(bytes));
+      if (!r || r.v !== 1 || !r.n) r = null;
+    } catch (e) { r = null; }
+
+    if (!r) {
+      out.innerHTML = '<div class="rz-card rz-empty"><h1 style="margin:0 0 8px;font-size:26px">Kein Rezept gefunden</h1><p style="margin:0">Der Link ist unvollständig. Bitte deinen Freund, ihn noch einmal zu schicken.</p></div>';
+      return;
+    }
+
+    var row = function (label, value) { return value ? '<div class="rz-row"><span>' + label + "</span><b>" + value + "</b></div>" : ""; };
+    var openBtn = document.getElementById("rzOpen");
+
+    // Packung (von Rösterei oder Freund): Bohne + optionales Startrezept
+    if (r.x === "b") {
+      document.title = r.n + " – Packung";
+      document.getElementById("rzKicker").textContent = r.f ? "Bohnen-Tipp von " + r.f : r.r ? "Packung von " + r.r : "Geteilte Packung";
+      var rc = r.rc || null, rb = "";
+      if (rc) {
+        if (rc.mg !== undefined) rb += "<div><span>Mahlgrad</span><b>" + esc(rc.mgs || num(rc.mg, 2)) + "</b></div>";
+        if (rc.d !== undefined) rb += "<div><span>Input</span><b>" + num(rc.d, 1) + " g</b></div>";
+        if (rc.y !== undefined) rb += "<div><span>Output</span><b>" + num(rc.y, 1) + " g</b></div>";
+        if (rc.t !== undefined) rb += "<div><span>Zeit</span><b>" + num(rc.t, 1) + " s</b></div>";
+      }
+      var rd = r.rd ? new Date(r.rd + "T00:00:00").toLocaleDateString("de-DE") : "";
+      out.innerHTML =
+        '<div class="rz-card">' +
+          '<div class="rz-head">' + tile("bean", "#a2845e") + "<div><h1>" + esc(r.n) + "</h1>" + (r.r ? "<small>" + esc(r.r) + "</small>" : "") + "</div></div>" +
+          row("Röstgrad", r.rl ? esc(r.rl) : "") +
+          row("Röstdatum", rd) +
+          row("Packung", r.w ? num(r.w, 0) + " g" : "") +
+          (rb ? '<p class="rz-sub">Startrezept' + (rc.g ? " (auf " + esc(rc.g) + ")" : "") + '</p><div class="rz-big">' + rb + "</div>" : "") +
+          (r.no ? '<p class="rz-note">„' + esc(r.no) + "“</p>" : "") +
+          (r.u ? '<p style="margin:16px 0 0"><a class="more" href="' + esc(r.u) + '" target="_blank" rel="noopener">Zum Shop</a></p>' : "") +
+        "</div>";
+      openBtn.textContent = "In Espressophie übernehmen";
+      openBtn.href = "espressophie://r#" + data;
+      document.getElementById("rzActions").hidden = false;
+      return;
+    }
+
+    document.title = r.n + " – Espresso-Rezept";
+    if (r.f) document.getElementById("rzKicker").textContent = "Rezept von " + r.f;
+
+    var big = "";
+    if (r.mg !== undefined) big += "<div><span>Mahlgrad</span><b>" + esc(r.mgs || num(r.mg, 2)) + "</b></div>";
+    if (r.d !== undefined) big += "<div><span>Input</span><b>" + num(r.d, 1) + " g</b></div>";
+    if (r.y !== undefined) big += "<div><span>Output</span><b>" + num(r.y, 1) + " g</b></div>";
+    if (r.t !== undefined) big += "<div><span>Zeit</span><b>" + num(r.t, 1) + " s</b></div>";
+
+    var taste = ["tb", "ts", "tk", "tf"].filter(function (k) { return r[k] !== undefined && r[k] !== null; })
+      .map(function (k) { return words[k][String(r[k])]; }).filter(Boolean)
+      .concat((r.tx || []).map(function (f) { return f === "channeling" ? "Channeling" : "adstringierend"; })).join(" · ");
+    var bean = [r.r, r.rl ? r.rl + " geröstet" : "", r.ra >= 0 ? "Tag " + r.ra + " nach Röstung" : ""].filter(Boolean).join(", ");
+
+    out.innerHTML =
+      '<div class="rz-card">' +
+        '<div class="rz-head">' + tile("shot", "#ff9500") + "<div><h1>" + esc(r.n) + "</h1>" + (bean ? "<small>" + esc(bean) + "</small>" : "") + "</div></div>" +
+        (big ? '<div class="rz-big">' + big + "</div>" : "") +
+        row("Zubereitung", r.k ? esc(r.k) : "") +
+        row("Verhältnis", r.d && r.y ? "1:" + num(r.y / r.d, 1) : "") +
+        row("Mühle", r.g ? esc(r.g) : "") +
+        row("Maschine", r.m ? esc(r.m) : "") +
+        row("Druck", r.p !== undefined ? num(r.p, 1) + " bar" : "") +
+        row("Temperatur", r.c !== undefined ? num(r.c, 0) + " °C" : "") +
+        row("Bewertung", r.s ? "★".repeat(r.s) : "") +
+        row("Geschmack", esc(taste)) +
+        (r.no ? '<p class="rz-note">„' + esc(r.no) + "“</p>" : "") +
+      "</div>";
+
+    openBtn.href = "espressophie://r#" + data;
+    document.getElementById("rzActions").hidden = false;
+  })();
+</script>
+</body>
+</html>
