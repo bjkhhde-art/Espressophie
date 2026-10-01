@@ -7,14 +7,18 @@
   <meta name="description" content="Datenschutzerklärung der App Espressophie und dieser Website." />
   <meta name="theme-color" content="#130c08" />
   <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="style.css?v=2" />
+  <script src="kontakt.js?v=2"></script>
+  <script src="main.js?v=2" defer></script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"><span></span></div>
 
 <header class="top">
   <div class="wrap">
     <a class="brand" href="./"><img src="assets/icon.png" alt="" /> Espressophie</a>
-    <nav class="nav" aria-label="Hauptnavigation"><a href="./">Startseite</a><a href="impressum.html">Impressum</a></nav>
+    <nav class="nav legal-nav" aria-label="Hauptnavigation"><a href="./">Startseite</a><a href="impressum.html">Impressum</a></nav>
   </div>
 </header>
 
@@ -27,18 +31,22 @@
       <p><b>Kurz gesagt:</b> Espressophie hat keinen eigenen Server und sammelt keine Daten über dich. Deine Einträge liegen auf deinem Handy und – wenn du dich mit Google anmeldest – in deinem eigenen Google Drive. Daten gehen nur an Dienste, die du selbst einrichtest (Google-Konto, Shelly Cloud, KI-Anbieter). Keine Werbung, keine Analyse, kein Tracking.</p>
     </div>
 
-    <h2>1. Verantwortlicher</h2>
-    <p>
-      <span class="todo">[Vor- und Nachname]</span><br />
-      <span class="todo">[Straße Hausnummer]</span><br />
-      <span class="todo">[PLZ Ort], Deutschland</span><br />
-      E-Mail: <span class="todo">[E-Mail-Adresse]</span>
+    <ul class="toc">
+      <li><a href="#verantwortlich">Verantwortlicher</a></li><li><a href="#app-daten">Daten der App</a></li><li><a href="#google">Google Drive</a></li><li><a href="#shelly">Shelly</a></li><li><a href="#ki">KI-Barista</a></li><li><a href="#loeschen">Löschung</a></li><li><a href="#website">Website</a></li><li><a href="#rechte">Deine Rechte</a></li><li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+
+    <h2 id="verantwortlich">1. Verantwortlicher</h2>
+    <p class="card-addr">
+      <span data-kontakt="name"></span><br />
+      <span data-kontakt="strasse"></span><br />
+      <span data-kontakt="plzOrt"></span>, <span data-kontakt="land"></span><br />
+      E-Mail: <span data-kontakt="email"></span>
     </p>
 
     <h2>2. Grundsatz: Deine Daten bleiben bei dir</h2>
     <p>Die App wird ohne eigenen Server betrieben. Der Anbieter der App (siehe Abschnitt 1) erhält keine Daten aus der App – weder deine Einträge noch Nutzungs- oder Gerätedaten. Es werden keine Analyse-, Werbe- oder Tracking-Dienste eingesetzt, und es werden keine Daten verkauft.</p>
 
-    <h2>3. Welche Daten die App verarbeitet</h2>
+    <h2 id="app-daten">3. Welche Daten die App verarbeitet</h2>
     <h3>3.1 Deine Einträge (auf dem Gerät)</h3>
     <p>Alles, was du einträgst, wird im Speicher der App auf deinem Gerät abgelegt:</p>
     <ul>
@@ -49,7 +57,7 @@
     </ul>
     <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der von dir gewünschten App-Funktionen).</p>
 
-    <h3>3.2 Anmeldung mit Google und Speicherung in Google Drive (optional)</h3>
+    <h3 id="google">3.2 Anmeldung mit Google und Speicherung in Google Drive (optional)</h3>
     <p>Du kannst dich mit deinem Google-Konto anmelden. Dafür nutzt die App die Anmeldung von Google (Google Identity Services) mit folgenden Berechtigungen:</p>
     <ul>
       <li><b>Name, E-Mail-Adresse und Profilbild</b> – nur zur Anzeige in der App (z. B. dein Profilbild statt des Zahnrads) und um deine Daten deinem Konto zuzuordnen. Sie werden nur auf deinem Gerät gespeichert.</li>
@@ -57,7 +65,7 @@
     </ul>
     <p>Die Daten werden direkt zwischen deinem Gerät und Google übertragen; der Anbieter der App hat keinen Zugriff darauf. Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Es gilt die <a href="https://policies.google.com/privacy" rel="noopener">Datenschutzerklärung von Google</a>. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ohne Anmeldung bleiben deine Daten ausschließlich auf deinem Gerät.</p>
 
-    <h3>3.3 Smarte Steckdose (Shelly, optional)</h3>
+    <h3 id="shelly">3.3 Smarte Steckdose (Shelly, optional)</h3>
     <p>Wenn du eine Shelly-Steckdose verbindest, kommuniziert die App direkt mit ihr:</p>
     <ul>
       <li><b>Im Heimnetz:</b> direkt mit der Steckdose über dein WLAN (Status, Stromverbrauch, erkannte Pumpenläufe, Ein-/Ausschalten, Installation des Espressophie-Skripts). Zum Finden der Steckdose kann die App dein lokales Netzwerk nach Shelly-Geräten durchsuchen; dabei verlassen keine Daten dein Heimnetz.</li>
@@ -65,7 +73,7 @@
     </ul>
     <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
 
-    <h3>3.4 KI-Barista (optional)</h3>
+    <h3 id="ki">3.4 KI-Barista (optional)</h3>
     <p>Wenn du den KI-Barista einschaltest und einen eigenen API-Schlüssel hinterlegst, sendet die App nach einem Shot bzw. auf deinen Wunsch folgende Daten an den von dir gewählten Anbieter: die Daten des Shots und der letzten Shots derselben Bohne (Mahlgrad, Mengen, Zeit, Druck, Temperatur, Bewertung, Notiz, Datum), Bohnen-Angaben (Name, Rösterei, Röstgrad, Röstalter), die Namen deiner Geräte, den Reinigungsstand und deine Zielwerte. <b>Name, E-Mail-Adresse oder andere Kontodaten werden nicht übertragen.</b> Die Anfrage erfolgt direkt von deinem Gerät mit deinem eigenen Schlüssel; es gelten die Bedingungen deines Kontos beim jeweiligen Anbieter.</p>
     <div class="table-scroll">
     <table>
@@ -93,7 +101,7 @@
     <h3>3.7 Bereitstellung über Google Play</h3>
     <p>Die App wird über Google Play vertrieben. Beim Herunterladen und bei der Nutzung von Google Play verarbeitet Google Daten in eigener Verantwortung (z. B. Kontodaten, Installationen, Absturzberichte des Android-Systems). Es gilt die <a href="https://policies.google.com/privacy" rel="noopener">Datenschutzerklärung von Google</a>.</p>
 
-    <h2>4. Speicherdauer und Löschung</h2>
+    <h2 id="loeschen">4. Speicherdauer und Löschung</h2>
     <p>Deine Daten bleiben gespeichert, bis du sie löschst:</p>
     <ul>
       <li>Einzelne Einträge löschst du in der App (lange drücken → Löschen oder nach links wischen).</li>
@@ -102,10 +110,10 @@
       <li>Den Zugriff der App auf dein Google-Konto widerrufst du unter <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>.</li>
     </ul>
 
-    <h2>5. Diese Website</h2>
-    <p>Diese Website wird über GitHub Pages bereitgestellt (GitHub B.V., Niederlande / GitHub, Inc., USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit sowie Browser-Informationen, um die Seite auszuliefern und die Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren Betrieb). Es gilt die <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>. Die Website verwendet keine Cookies, keine Analyse-Dienste und lädt keine Schriften oder Skripte von Drittanbietern.</p>
+    <h2 id="website">5. Diese Website</h2>
+    <p>Diese Website wird über GitHub Pages bereitgestellt (GitHub B.V., Niederlande / GitHub, Inc., USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit sowie Browser-Informationen, um die Seite auszuliefern und die Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren Betrieb). Es gilt die <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>. Die Website verwendet keine Cookies, keine Analyse-Dienste und lädt keine Schriften oder Skripte von Drittanbietern; die Animationen der Seite laufen ausschließlich lokal in deinem Browser.</p>
 
-    <h2>6. Deine Rechte</h2>
+    <h2 id="rechte">6. Deine Rechte</h2>
     <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21) sowie das Recht, eine Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen (Art. 7 Abs. 3). Da der Anbieter der App keine Daten von dir speichert, kannst du die meisten dieser Rechte direkt in der App bzw. in deinem Google-Konto ausüben. Außerdem hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO).</p>
 
     <h2>7. Kinder</h2>
@@ -114,8 +122,8 @@
     <h2>8. Änderungen</h2>
     <p>Wenn sich die App oder die rechtlichen Anforderungen ändern, wird diese Datenschutzerklärung angepasst. Es gilt die jeweils hier veröffentlichte Fassung.</p>
 
-    <h2>9. Kontakt</h2>
-    <p>Fragen zum Datenschutz richtest du an: <span class="todo">[E-Mail-Adresse]</span></p>
+    <h2 id="kontakt">9. Kontakt</h2>
+    <p>Fragen zum Datenschutz richtest du an: <span data-kontakt="email"></span></p>
   </div>
 </main>
 

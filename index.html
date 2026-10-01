@@ -12,15 +12,46 @@
   <meta property="og:description" content="Verstehen, was in der Tasse passiert. Die Espresso-App für Siebträger." />
   <meta property="og:image" content="assets/og-image.jpg" />
   <meta property="og:type" content="website" />
-  <link rel="stylesheet" href="style.css" />
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="style.css?v=2" />
+  <script src="main.js?v=2" defer></script>
 </head>
 <body>
+
+<!-- Gemeinsame SVG-Bausteine -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bean" viewBox="0 0 40 56">
+      <ellipse cx="20" cy="28" rx="17" ry="25" transform="rotate(18 20 28)" fill="currentColor" />
+      <path d="M24 6c-9 10 2 22-8 44" fill="none" stroke="#1a100a" stroke-width="3" stroke-linecap="round" opacity=".75" />
+    </symbol>
+    <linearGradient id="bezel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9e4df" />
+      <stop offset=".35" stop-color="#8b847e" />
+      <stop offset=".6" stop-color="#d5d0cb" />
+      <stop offset="1" stop-color="#5f5853" />
+    </linearGradient>
+    <radialGradient id="dial" cx=".5" cy=".38" r=".7">
+      <stop offset="0" stop-color="#3a2a20" />
+      <stop offset="1" stop-color="#120b07" />
+    </radialGradient>
+    <linearGradient id="arc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#b06e3a" />
+      <stop offset=".6" stop-color="#e8b478" />
+      <stop offset="1" stop-color="#7ddc9c" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"><span></span></div>
 
 <header class="top">
   <div class="wrap">
     <a class="brand" href="./"><img src="assets/icon.png" alt="" /> Espressophie</a>
-    <nav class="nav" aria-label="Hauptnavigation">
+    <button class="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    <nav class="nav" id="nav" aria-label="Hauptnavigation">
       <a href="#funktionen">Funktionen</a>
+      <a href="#ablauf">So funktioniert's</a>
       <a href="#shelly">Smarte Steckdose</a>
       <a href="#daten">Deine Daten</a>
       <a href="#faq">Fragen</a>
@@ -29,15 +60,25 @@
 </header>
 
 <main>
-  <!-- Hero -->
+  <!-- ============ Hero ============ -->
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="glow g1" data-parallax="-0.15"></div>
+      <div class="glow g2" data-parallax="0.1"></div>
+      <svg class="bean b1" data-parallax="-0.45" data-spin="40"><use href="#bean" /></svg>
+      <svg class="bean b2" data-parallax="-0.25" data-spin="-30"><use href="#bean" /></svg>
+      <svg class="bean b3" data-parallax="-0.6" data-spin="55"><use href="#bean" /></svg>
+      <svg class="bean b4" data-parallax="-0.35" data-spin="-45"><use href="#bean" /></svg>
+      <svg class="bean b5" data-parallax="-0.2" data-spin="25"><use href="#bean" /></svg>
+    </div>
+
     <div class="wrap">
-      <div>
-        <span class="eyebrow">Die App für Siebträger-Fans</span>
-        <h1>Espressophie</h1>
-        <p class="claim">Verstehen, was in der Tasse passiert.</p>
-        <p class="lead">Halte jeden Shot fest, finde den idealen Mahlgrad für jede Bohne und bekomme nach jedem Espresso einen konkreten Tipp für den nächsten. Mit smarter Steckdose heizt deine Maschine vor, bevor du in der Küche bist.</p>
-        <div class="cta">
+      <div class="hero-text">
+        <span class="eyebrow intro" style="--d:0">Die App für Siebträger-Fans</span>
+        <h1 class="intro" style="--d:1">Espresso<span class="soft">phie</span></h1>
+        <p class="claim intro" style="--d:2">Verstehen, was in der Tasse passiert.</p>
+        <p class="lead intro" style="--d:3">Halte jeden Shot fest, finde den idealen Mahlgrad für jede Bohne und bekomme nach jedem Espresso einen konkreten Tipp für den nächsten. Mit smarter Steckdose heizt deine Maschine vor, bevor du in der Küche bist.</p>
+        <div class="cta intro" style="--d:4">
           <span class="btn btn-primary" aria-disabled="true">
             <svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.4-9.2c.5-.3.5-1.1 0-1.4L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></svg>
             <span><small>Bald bei</small>Google Play</span>
@@ -45,105 +86,236 @@
           <a class="btn btn-ghost" href="#funktionen">Was die App kann</a>
         </div>
       </div>
-      <div class="phone"><img src="assets/home.webp" alt="Startseite von Espressophie mit Manometern für Last Shot, Packung, Verlauf und Setup" width="540" height="1080" /></div>
+
+      <div class="hero-phone intro" style="--d:2">
+        <div class="tilt" data-tilt>
+          <div class="phone float"><img src="assets/home.webp" alt="Startseite von Espressophie mit Manometern für Last Shot, Packung, Verlauf und Setup" width="540" height="1080" /></div>
+        </div>
+        <div class="chip chip-a"><b>11,3</b> Mahlgrad-Empfehlung</div>
+        <div class="chip chip-b"><i class="dot"></i> Maschine vorgewärmt</div>
+      </div>
     </div>
+
+    <a class="scroll-hint" href="#funktionen" aria-label="Weiter nach unten"><span></span></a>
   </section>
 
-  <!-- Funktionen -->
+  <!-- ============ Laufband ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track" data-marquee="1">
+      <span>Mahlgrad</span><svg><use href="#bean" /></svg><span>Ratio 1 : 2</span><svg><use href="#bean" /></svg><span>Crema</span><svg><use href="#bean" /></svg><span>Röstalter</span><svg><use href="#bean" /></svg><span>Extraktion</span><svg><use href="#bean" /></svg><span>Brühdruck</span><svg><use href="#bean" /></svg><span>Barista-Tipp</span><svg><use href="#bean" /></svg>
+      <span>Mahlgrad</span><svg><use href="#bean" /></svg><span>Ratio 1 : 2</span><svg><use href="#bean" /></svg><span>Crema</span><svg><use href="#bean" /></svg><span>Röstalter</span><svg><use href="#bean" /></svg><span>Extraktion</span><svg><use href="#bean" /></svg><span>Brühdruck</span><svg><use href="#bean" /></svg><span>Barista-Tipp</span><svg><use href="#bean" /></svg>
+    </div>
+  </div>
+
+  <!-- ============ Funktionen ============ -->
   <section id="funktionen">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
+        <span class="kicker">Funktionen</span>
         <h2>Alles, was ein Home-Barista braucht</h2>
         <p>Kein Rezeptbuch, sondern dein persönliches Espresso-Labor – übersichtlich im Look einer klassischen Siebträgermaschine.</p>
       </div>
       <div class="features">
-        <article class="card"><div class="icon">☕</div><h3>Shots festhalten</h3><p>Bohne, Mahlgrad, Zeit, Input und Output, Druck, Notiz und Bewertung – mit automatischer Ratio und Score.</p></article>
-        <article class="card"><div class="icon">🎯</div><h3>Idealer Mahlgrad</h3><p>Eine Empfehlung pro Bohne, berechnet aus deinen besten Shots – getrennt nach Mühle.</p></article>
-        <article class="card"><div class="icon">🫘</div><h3>Bohnen im Blick</h3><p>Röstalter, Frische, Restmenge und was ein Shot kostet. Die App sagt dir, wie lange die Packung noch reicht.</p></article>
-        <article class="card"><div class="icon">🧑‍🍳</div><h3>KI-Barista <span class="tag">optional</span></h3><p>Nach jedem Shot eine kurze Einschätzung und ein konkreter nächster Schritt – mit einem KI-Anbieter deiner Wahl, auch kostenlos.</p></article>
-        <article class="card"><div class="icon">🔔</div><h3>Erinnerungen</h3><p>„Maschine ist vorgewärmt“, „Schaltet gleich ab“, „Reinigung fällig“ – jede einzeln ein- und ausschaltbar.</p></article>
-        <article class="card"><div class="icon">🧽</div><h3>Setup &amp; Reinigung</h3><p>Maschinen, Mühlen und Zubehör verwalten, Reinigungen protokollieren und sehen, was als Nächstes fällig ist.</p></article>
+        <article class="card" data-reveal style="--d:0">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3c-.8 1 .8 2 0 3M12 3c-.8 1 .8 2 0 3"/></svg></div>
+          <h3>Shots festhalten</h3><p>Bohne, Mahlgrad, Zeit, Input und Output, Druck, Notiz und Bewertung – mit automatischer Ratio und Score.</p>
+        </article>
+        <article class="card" data-reveal style="--d:1">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
+          <h3>Idealer Mahlgrad</h3><p>Eine Empfehlung pro Bohne, berechnet aus deinen besten Shots – getrennt nach Mühle.</p>
+        </article>
+        <article class="card" data-reveal style="--d:2">
+          <div class="icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(20 12 12)"/><path d="M14.5 4.2c-3.5 4 .8 8.5-3 15.6"/></svg></div>
+          <h3>Bohnen im Blick</h3><p>Röstalter, Frische, Restmenge und was ein Shot kostet. Die App sagt dir, wie lange die Packung noch reicht.</p>
+        </article>
+        <article class="card" data-reveal style="--d:0">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.5L12 15l-1.8-4.5L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></div>
+          <h3>KI-Barista <span class="tag">optional</span></h3><p>Nach jedem Shot eine kurze Einschätzung und ein konkreter nächster Schritt – mit einem KI-Anbieter deiner Wahl, auch kostenlos.</p>
+        </article>
+        <article class="card" data-reveal style="--d:1">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div>
+          <h3>Erinnerungen</h3><p>„Maschine ist vorgewärmt“, „Schaltet gleich ab“, „Reinigung fällig“ – jede einzeln ein- und ausschaltbar.</p>
+        </article>
+        <article class="card" data-reveal style="--d:2">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 9h12M5 9v3.5a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4V9"/><path d="M15 10h5"/><path d="M8 20h2"/><path d="M17 4l1 2M20 3l-.5 2.2M14.5 3.5l1.5 1.7"/></svg></div>
+          <h3>Setup &amp; Reinigung</h3><p>Maschinen, Mühlen und Zubehör verwalten, Reinigungen protokollieren und sehen, was als Nächstes fällig ist.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Shot + Tipp -->
-  <section class="split">
+  <!-- ============ Ablauf (Sticky-Story) ============ -->
+  <section class="story" id="ablauf">
     <div class="wrap">
-      <div class="phone"><img src="assets/shot.webp" alt="Neuer Shot mit automatisch erkannter Extraktionszeit, Mahlgrad-Empfehlung und Barista-Tipp" width="540" height="1080" loading="lazy" /></div>
-      <div class="text">
+      <div class="section-head center" data-reveal>
+        <span class="kicker">So funktioniert's</span>
         <h2>Jeder Shot mit Tipp für den nächsten</h2>
-        <p class="lead">Espressophie lernt aus deinen Shots. Beim nächsten Mal siehst du sofort, welcher Mahlgrad für diese Bohne funktioniert hat – und was du ändern solltest.</p>
-        <ul class="checks">
-          <li><b>Mahlgrad-Empfehlung</b> pro Bohne und Mühle, mit einem Tipp übernehmen</li>
-          <li><b>Barista-Tipp</b> mit Diagnose, nächstem Schritt und Erwartung</li>
-          <li><b>Extraktion automatisch erkannt</b> – mit smarter Steckdose</li>
-        </ul>
+        <p>Espressophie lernt aus deinen Shots. Beim nächsten Mal siehst du sofort, welcher Mahlgrad für diese Bohne funktioniert hat – und was du ändern solltest.</p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-stage" aria-hidden="true">
+          <div class="phone">
+            <div class="screens">
+              <img class="active" src="assets/shot.webp" alt="" width="540" height="1080" loading="lazy" />
+              <img src="assets/empfehlungen.webp" alt="" width="540" height="1080" loading="lazy" />
+              <img src="assets/verlauf.webp" alt="" width="540" height="1080" loading="lazy" />
+            </div>
+          </div>
+          <div class="story-dots"><i class="on"></i><i></i><i></i></div>
+        </div>
+
+        <ol class="steps">
+          <li class="step active" data-step="0">
+            <span class="num">01</span>
+            <h3>Shot festhalten</h3>
+            <p>Bohne wählen, Mengen und Zeit eintragen – mit smarter Steckdose wird die <b>Extraktionszeit automatisch erkannt</b>. Ratio und Score rechnet die App selbst aus.</p>
+            <div class="phone step-phone"><img src="assets/shot.webp" alt="Neuer Shot mit automatisch erkannter Extraktionszeit, Mahlgrad-Empfehlung und Barista-Tipp" width="540" height="1080" loading="lazy" /></div>
+          </li>
+          <li class="step" data-step="1">
+            <span class="num">02</span>
+            <h3>Den idealen Mahlgrad finden</h3>
+            <p>Aus deinen besten Shots entsteht eine <b>Mahlgrad-Empfehlung pro Bohne und Mühle</b> – mit einem Tipp übernommen. Der <b>Barista-Tipp</b> liefert Diagnose, nächsten Schritt und was du erwarten kannst.</p>
+            <div class="phone step-phone"><img src="assets/empfehlungen.webp" alt="Mahlgrad-Empfehlungen je Bohne und Mühle" width="540" height="1080" loading="lazy" /></div>
+          </li>
+          <li class="step" data-step="2">
+            <span class="num">03</span>
+            <h3>Fortschritt sehen</h3>
+            <p>Im Verlauf siehst du jeden Shot mit Mahlgrad, Zeit, Mengen, Bewertung und Barista-Tipp – filterbar nach Datum und Kaffee. So wird aus Bauchgefühl <b>reproduzierbarer Geschmack</b>.</p>
+            <div class="phone step-phone"><img src="assets/verlauf.webp" alt="Verlauf aller Shots" width="540" height="1080" loading="lazy" /></div>
+          </li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <!-- Shelly -->
-  <section class="split flip" id="shelly">
+  <!-- ============ Zahlen / Manometer ============ -->
+  <section class="numbers">
     <div class="wrap">
-      <div class="text">
+      <div class="section-head center" data-reveal>
+        <span class="kicker">Im Look deiner Maschine</span>
+        <h2>Ein klassischer Shot in Zahlen</h2>
+        <p>Typische Startwerte für einen doppelten Espresso – in der App legst du deine eigenen Zielwerte fest.</p>
+      </div>
+      <div class="gauges">
+        <div class="gauge" data-reveal style="--d:0" data-value="18" data-max="25" data-dec="0"><div class="g-read"><b>18</b><small>g</small></div><span class="g-label">Dosis</span></div>
+        <div class="gauge" data-reveal style="--d:1" data-value="36" data-max="60" data-dec="0"><div class="g-read"><b>36</b><small>g</small></div><span class="g-label">Ausbeute</span></div>
+        <div class="gauge" data-reveal style="--d:2" data-value="28" data-max="45" data-dec="0"><div class="g-read"><b>28</b><small>s</small></div><span class="g-label">Zeit</span></div>
+        <div class="gauge" data-reveal style="--d:3" data-value="9" data-max="15" data-dec="0"><div class="g-read"><b>9</b><small>bar</small></div><span class="g-label">Druck</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Shelly ============ -->
+  <section class="split" id="shelly">
+    <div class="wrap">
+      <div class="text" data-reveal>
+        <span class="kicker">Smarte Steckdose</span>
         <h2>Maschine smart vorheizen</h2>
         <p class="lead">Mit einer Shelly-Steckdose schaltest du deine Siebträgermaschine per App ein – zu Hause über WLAN, unterwegs über die Shelly Cloud. Espressophie zeigt dir, wann sie vorgewärmt ist.</p>
         <ul class="checks">
-          <li><b>Vorgewärmt-Anzeige</b> anhand des Stromverbrauchs</li>
-          <li><b>Shot-Erkennung:</b> jeder Pumpenlauf wird erkannt, die Zeit vorgeschlagen</li>
-          <li><b>Verbrauch &amp; Kosten</b> pro Tag, Sicherheitsabschaltung nach 2 Stunden</li>
-          <li><b>Einrichtung in 4 Schritten</b> – das Skript spielt die App per Knopfdruck auf die Steckdose</li>
+          <li data-reveal style="--d:1"><b>Vorgewärmt-Anzeige</b> anhand des Stromverbrauchs</li>
+          <li data-reveal style="--d:2"><b>Shot-Erkennung:</b> jeder Pumpenlauf wird erkannt, die Zeit vorgeschlagen</li>
+          <li data-reveal style="--d:3"><b>Verbrauch &amp; Kosten</b> pro Tag, Sicherheitsabschaltung nach 2 Stunden</li>
+          <li data-reveal style="--d:4"><b>Einrichtung in 4 Schritten</b> – das Skript spielt die App per Knopfdruck auf die Steckdose</li>
         </ul>
-        <p class="meta" style="color:var(--faint);margin-top:18px;font-size:.9rem">Getestet mit dem Shelly Plug S Gen3. Shelly ist eine Marke der Shelly Group; Espressophie ist kein offizielles Shelly-Produkt.</p>
+        <p class="fine">Getestet mit dem Shelly Plug S Gen3. Shelly ist eine Marke der Shelly Group; Espressophie ist kein offizielles Shelly-Produkt.</p>
       </div>
-      <div class="phone"><img src="assets/shelly.webp" alt="Shelly-Verbindung mit Status: Maschine an und vorgewärmt, Verbrauch heute und erkannte Shots" width="540" height="1080" loading="lazy" /></div>
-    </div>
-  </section>
-
-  <!-- Galerie -->
-  <section>
-    <div class="wrap">
-      <div class="section-head"><h2>Einblicke</h2></div>
-      <div class="gallery" tabindex="0" aria-label="Screenshots der App">
-        <figure><div class="phone"><img src="assets/home.webp" alt="Startseite" width="540" height="1080" loading="lazy" /></div><figcaption>Alles auf einen Blick</figcaption></figure>
-        <figure><div class="phone"><img src="assets/empfehlungen.webp" alt="Mahlgrad-Empfehlungen" width="540" height="1080" loading="lazy" /></div><figcaption>Der ideale Mahlgrad</figcaption></figure>
-        <figure><div class="phone"><img src="assets/bohnen.webp" alt="Bohnen und Vorrat" width="540" height="1080" loading="lazy" /></div><figcaption>Bohnen &amp; Vorrat</figcaption></figure>
-        <figure><div class="phone"><img src="assets/verlauf.webp" alt="Verlauf aller Shots" width="540" height="1080" loading="lazy" /></div><figcaption>Verlauf</figcaption></figure>
-        <figure><div class="phone"><img src="assets/shot.webp" alt="Neuer Shot" width="540" height="1080" loading="lazy" /></div><figcaption>Neuer Shot</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- Datenschutz -->
-  <section id="daten">
-    <div class="wrap">
-      <div class="privacy-band">
-        <div class="big" aria-hidden="true">🔒</div>
-        <div>
-          <h2>Deine Daten gehören dir</h2>
-          <p>Espressophie hat keinen eigenen Server. Meldest du dich mit Google an, liegen deine Daten in <b>deinem eigenen Google Drive</b> im Ordner „Espressophie“ – die App sieht nur ihre eigenen Dateien. Ohne Anmeldung bleibt alles auf deinem Handy. Keine Werbung, kein Tracking. <a href="datenschutz.html">Zur Datenschutzerklärung</a></p>
+      <div class="media heatup" data-reveal>
+        <div class="phone" data-parallax="-0.06"><img src="assets/shelly.webp" alt="Shelly-Verbindung mit Status: Maschine an und vorgewärmt, Verbrauch heute und erkannte Shots" width="540" height="1080" loading="lazy" /></div>
+        <div class="heat-card">
+          <div class="heat-row"><span class="heat-state"><i class="dot"></i><span class="s1">Heizt auf …</span><span class="s2">Vorgewärmt</span></span><span class="heat-temp">Shelly Plug</span></div>
+          <div class="heat-bar"><span></span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ============ Galerie ============ -->
+  <section class="gallery-sec">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="kicker">Einblicke</span>
+        <h2>Schön auf jedem Bildschirm</h2>
+      </div>
+    </div>
+    <div class="fan" tabindex="0" aria-label="Screenshots der App">
+      <figure style="--i:-2;--a:2"><div class="phone"><img src="assets/bohnen.webp" alt="Bohnen und Vorrat" width="540" height="1080" loading="lazy" /></div><figcaption>Bohnen &amp; Vorrat</figcaption></figure>
+      <figure style="--i:-1;--a:1"><div class="phone"><img src="assets/empfehlungen.webp" alt="Mahlgrad-Empfehlungen" width="540" height="1080" loading="lazy" /></div><figcaption>Der ideale Mahlgrad</figcaption></figure>
+      <figure style="--i:0;--a:0"><div class="phone"><img src="assets/home.webp" alt="Startseite" width="540" height="1080" loading="lazy" /></div><figcaption>Alles auf einen Blick</figcaption></figure>
+      <figure style="--i:1;--a:1"><div class="phone"><img src="assets/shot.webp" alt="Neuer Shot" width="540" height="1080" loading="lazy" /></div><figcaption>Neuer Shot</figcaption></figure>
+      <figure style="--i:2;--a:2"><div class="phone"><img src="assets/verlauf.webp" alt="Verlauf aller Shots" width="540" height="1080" loading="lazy" /></div><figcaption>Verlauf</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- ============ Datenschutz ============ -->
+  <section id="daten">
+    <div class="wrap">
+      <div class="privacy-band" data-reveal>
+        <svg class="lock" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="shackle" d="M20 30V20a12 12 0 0 1 24 0v10" />
+          <rect x="12" y="29" width="40" height="28" rx="8" />
+          <circle cx="32" cy="41" r="3.5" />
+          <path d="M32 44v5" />
+        </svg>
+        <div>
+          <h2>Deine Daten gehören dir</h2>
+          <p>Espressophie hat keinen eigenen Server. Meldest du dich mit Google an, liegen deine Daten in <b>deinem eigenen Google Drive</b> im Ordner „Espressophie“ – die App sieht nur ihre eigenen Dateien. Ohne Anmeldung bleibt alles auf deinem Handy.</p>
+          <ul class="pills">
+            <li>Keine Werbung</li><li>Kein Tracking</li><li>Kein eigener Server</li>
+          </ul>
+          <a class="more" href="datenschutz.html">Zur Datenschutzerklärung →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
   <section class="faq" id="faq">
     <div class="wrap">
-      <div class="section-head"><h2>Häufige Fragen</h2></div>
-      <details><summary>Wann gibt es die App?</summary><p>Espressophie befindet sich im Test. Die Veröffentlichung im Google Play Store ist in Vorbereitung. Eine iPhone-Version ist geplant.</p></details>
-      <details><summary>Kostet die App etwas?</summary><p>Nein. Wenn du den optionalen KI-Barista mit einem kostenpflichtigen Anbieter nutzt, rechnet dieser direkt mit dir ab – meist deutlich unter einem Cent pro Tipp. Mit Groq oder OpenRouter geht es auch kostenlos.</p></details>
-      <details><summary>Brauche ich eine smarte Steckdose?</summary><p>Nein. Alle Funktionen rund um Shots, Bohnen und Empfehlungen funktionieren ohne. Die Steckdose ergänzt Vorheizen, Shot-Erkennung und Verbrauchsanzeige.</p></details>
-      <details><summary>Muss ich mich anmelden?</summary><p>Nein. Ohne Anmeldung bleiben deine Daten nur auf dem Handy. Mit Google-Anmeldung werden sie in deinem eigenen Google Drive gesichert und sind auf allen deinen Geräten verfügbar.</p></details>
-      <details><summary>Welche Daten bekommt der KI-Barista?</summary><p>Nur die Shot-Daten (Bohne, Mahlgrad, Mengen, Zeit, Bewertung, Notiz), deine Zielwerte und dein Setup – kein Name, keine E-Mail. Die Anfrage geht direkt an den Anbieter, den du gewählt hast, mit deinem eigenen Schlüssel.</p></details>
+      <div class="section-head center" data-reveal>
+        <span class="kicker">FAQ</span>
+        <h2>Häufige Fragen</h2>
+      </div>
+      <div class="faq-list">
+        <details data-reveal><summary>Wann gibt es die App?</summary><div class="ans"><p>Espressophie befindet sich im Test. Die Veröffentlichung im Google Play Store ist in Vorbereitung. Eine iPhone-Version ist geplant.</p></div></details>
+        <details data-reveal><summary>Kostet die App etwas?</summary><div class="ans"><p>Nein. Wenn du den optionalen KI-Barista mit einem kostenpflichtigen Anbieter nutzt, rechnet dieser direkt mit dir ab – meist deutlich unter einem Cent pro Tipp. Mit Groq oder OpenRouter geht es auch kostenlos.</p></div></details>
+        <details data-reveal><summary>Brauche ich eine smarte Steckdose?</summary><div class="ans"><p>Nein. Alle Funktionen rund um Shots, Bohnen und Empfehlungen funktionieren ohne. Die Steckdose ergänzt Vorheizen, Shot-Erkennung und Verbrauchsanzeige.</p></div></details>
+        <details data-reveal><summary>Muss ich mich anmelden?</summary><div class="ans"><p>Nein. Ohne Anmeldung bleiben deine Daten nur auf dem Handy. Mit Google-Anmeldung werden sie in deinem eigenen Google Drive gesichert und sind auf allen deinen Geräten verfügbar.</p></div></details>
+        <details data-reveal><summary>Welche Daten bekommt der KI-Barista?</summary><div class="ans"><p>Nur die Shot-Daten (Bohne, Mahlgrad, Mengen, Zeit, Bewertung, Notiz), deine Zielwerte und dein Setup – kein Name, keine E-Mail. Die Anfrage geht direkt an den Anbieter, den du gewählt hast, mit deinem eigenen Schlüssel.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Abschluss ============ -->
+  <section class="finale">
+    <div class="wrap" data-reveal>
+      <div class="cup" aria-hidden="true">
+        <svg class="steam" viewBox="0 0 120 90">
+          <path d="M40 85c-12-14 12-22 0-38s10-24 0-40" />
+          <path d="M60 85c-12-14 12-22 0-38s10-24 0-40" />
+          <path d="M80 85c-12-14 12-22 0-38s10-24 0-40" />
+        </svg>
+        <svg class="mug" viewBox="0 0 160 90">
+          <path d="M22 8h104v26a42 42 0 0 1-42 42H64A42 42 0 0 1 22 34z" />
+          <path d="M126 18h8a16 16 0 0 1 0 32h-12" fill="none" />
+          <ellipse cx="74" cy="9" rx="50" ry="5" class="crema" />
+          <path d="M8 84h132" class="saucer" />
+        </svg>
+      </div>
+      <h2>Bereit für deinen besten Shot?</h2>
+      <p>Espressophie erscheint bald im Google Play Store.</p>
+      <span class="btn btn-primary" aria-disabled="true">
+        <svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.4-9.2c.5-.3.5-1.1 0-1.4L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></svg>
+        <span><small>Bald bei</small>Google Play</span>
+      </span>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Espressophie · ein privates Projekt eines Hobby-Baristas</span>
+    <span class="foot-brand"><img src="assets/icon.png" alt="" /> © 2026 Espressophie · ein privates Projekt eines Hobby-Baristas</span>
     <nav aria-label="Rechtliches">
       <a href="datenschutz.html">Datenschutz</a>
       <a href="impressum.html">Impressum</a>
