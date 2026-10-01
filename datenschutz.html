@@ -1,0 +1,144 @@
+---
+# Kontaktdaten kommen aus _config.yml
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Datenschutzerklärung – Espressophie</title>
+  <meta name="description" content="Datenschutzerklärung der App Espressophie und dieser Website." />
+  <link rel="canonical" href="https://www.espressophie.de/datenschutz.html" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.png" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="style.css?v=4" />
+  <script src="main.js?v=4" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="" /> Espressophie</a>
+    <nav class="subnav" aria-label="Hauptnavigation"><a href="./">Startseite</a><a href="datenschutz.html" aria-current="page">Datenschutz</a><a href="impressum.html">Impressum</a></nav>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+    <h1>Datenschutz&shy;erklärung</h1>
+    <p class="meta">für die App „Espressophie“ (Android, Paket <code>de.espressophie.app</code>) und diese Website · Stand: 30. September 2026</p>
+
+    <div class="box">
+      <p><b>Kurz gesagt:</b> Espressophie hat keinen eigenen Server und sammelt keine Daten über dich. Deine Einträge liegen auf deinem Handy und – wenn du dich mit Google anmeldest – in deinem eigenen Google Drive. Daten gehen nur an Dienste, die du selbst einrichtest (Google-Konto, Shelly Cloud, KI-Anbieter). Keine Werbung, keine Analyse, kein Tracking.</p>
+    </div>
+
+    <ul class="toc">
+      <li><a href="#verantwortlich">Verantwortlicher</a></li><li><a href="#app-daten">Daten der App</a></li><li><a href="#google">Google Drive</a></li><li><a href="#shelly">Shelly</a></li><li><a href="#ki">KI-Barista</a></li><li><a href="#loeschen">Löschung</a></li><li><a href="#website">Website</a></li><li><a href="#rechte">Deine Rechte</a></li><li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+
+    <h2 id="verantwortlich">1. Verantwortlicher</h2>
+    <p class="card-addr">
+      {{ site.kontakt.name }}<br />
+      {{ site.kontakt.strasse }}<br />
+      {{ site.kontakt.plzOrt }}, {{ site.kontakt.land }}<br />
+      E-Mail: <a href="mailto:{{ site.kontakt.email }}">{{ site.kontakt.email }}</a>
+    </p>
+
+    <h2>2. Grundsatz: Deine Daten bleiben bei dir</h2>
+    <p>Die App wird ohne eigenen Server betrieben. Der Anbieter der App (siehe Abschnitt 1) erhält keine Daten aus der App – weder deine Einträge noch Nutzungs- oder Gerätedaten. Es werden keine Analyse-, Werbe- oder Tracking-Dienste eingesetzt, und es werden keine Daten verkauft.</p>
+
+    <h2 id="app-daten">3. Welche Daten die App verarbeitet</h2>
+    <h3>3.1 Deine Einträge (auf dem Gerät)</h3>
+    <p>Alles, was du einträgst, wird im Speicher der App auf deinem Gerät abgelegt:</p>
+    <ul>
+      <li>Shots: Bohne, Mahlgrad, Mengen, Extraktionszeit, Druck, Temperatur, Brühmethode, Notiz, Bewertung, Datum und Uhrzeit</li>
+      <li>Kaffeebohnen/Packungen, Geräte (Maschine, Mühle, Zubehör) und Reinigungseinträge</li>
+      <li>Einstellungen, z. B. Zielwerte, Strompreis, Design, Erinnerungen</li>
+      <li>falls von dir eingerichtet: Verbindungsdaten deiner Shelly-Steckdose (IP-Adresse, Geräte-ID, ggf. Geräte-Passwort und Shelly-Cloud-Schlüssel) und API-Schlüssel eines KI-Anbieters</li>
+    </ul>
+    <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Bereitstellung der von dir gewünschten App-Funktionen).</p>
+
+    <h3 id="google">3.2 Anmeldung mit Google und Speicherung in Google Drive (optional)</h3>
+    <p>Du kannst dich mit deinem Google-Konto anmelden. Dafür nutzt die App die Anmeldung von Google (Google Identity Services) mit folgenden Berechtigungen:</p>
+    <ul>
+      <li><b>Name, E-Mail-Adresse und Profilbild</b> – nur zur Anzeige in der App (z. B. dein Profilbild statt des Zahnrads) und um deine Daten deinem Konto zuzuordnen. Sie werden nur auf deinem Gerät gespeichert.</li>
+      <li><b>Google Drive, nur von der App erstellte Dateien</b> (Berechtigung „drive.file“) – die App legt in deinem Google Drive den Ordner „Espressophie“ mit der Datei „espressophie-daten.json“ an und gleicht deine Einträge (Abschnitt 3.1) darüber ab. Die App kann <b>keine anderen Dateien</b> in deinem Google Drive sehen.</li>
+    </ul>
+    <p>Die Daten werden direkt zwischen deinem Gerät und Google übertragen; der Anbieter der App hat keinen Zugriff darauf. Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Es gilt die <a href="https://policies.google.com/privacy" rel="noopener">Datenschutzerklärung von Google</a>. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Ohne Anmeldung bleiben deine Daten ausschließlich auf deinem Gerät.</p>
+    <p><b>Automatische Sicherung:</b> Bist du angemeldet, legt die App einmal pro Woche zusätzlich eine Sicherungskopie deiner Einträge im selben Ordner deines Google Drive ab (Dateiname „espressophie-backup-JJJJ-MM-TT.json“); die sechs neuesten bleiben erhalten, ältere löscht die App. Auf Wunsch kannst du ein Backup auch als Datei über das Teilen-Menü deines Handys speichern oder eine solche Datei wieder einspielen – dabei wird nichts an den Anbieter der App übertragen.</p>
+
+    <h3 id="shelly">3.3 Smarte Steckdose (Shelly, optional)</h3>
+    <p>Wenn du eine Shelly-Steckdose verbindest, kommuniziert die App direkt mit ihr:</p>
+    <ul>
+      <li><b>Im Heimnetz:</b> direkt mit der Steckdose über dein WLAN (Status, Stromverbrauch, erkannte Pumpenläufe, Ein-/Ausschalten, Installation des Espressophie-Skripts). Zum Finden der Steckdose kann die App dein lokales Netzwerk nach Shelly-Geräten durchsuchen; dabei verlassen keine Daten dein Heimnetz.</li>
+      <li><b>Unterwegs (nur wenn du einen Cloud-Schlüssel einträgst):</b> über die Shelly Cloud. Dabei werden dein Cloud-Schlüssel, die Geräte-ID und Schaltbefehle an die Server der Shelly Group (Shelly Europe Ltd. bzw. Shelly Group AD, Bulgarien) übertragen. Es gilt die <a href="https://www.shelly.com/de/pages/privacy-policy" rel="noopener">Datenschutzerklärung von Shelly</a>.</li>
+    </ul>
+    <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+    <h3 id="ki">3.4 KI-Barista (optional)</h3>
+    <p>Wenn du den KI-Barista einschaltest und einen eigenen API-Schlüssel hinterlegst, sendet die App nach einem Shot bzw. auf deinen Wunsch folgende Daten an den von dir gewählten Anbieter: die Daten des Shots und der letzten Shots derselben Bohne (Mahlgrad, Mengen, Zeit, Druck, Temperatur, Bewertung, Notiz, Datum), Bohnen-Angaben (Name, Rösterei, Röstgrad, Röstalter), die Namen deiner Geräte, den Reinigungsstand und deine Zielwerte. <b>Name, E-Mail-Adresse oder andere Kontodaten werden nicht übertragen.</b> Nutzt du „Frag den Barista“, werden zusätzlich deine Frage, die letzten bis zu 12 Shots (inklusive Dial-In-Testshots), die Bohnen in deinem Vorrat (Name, Rösterei, Röstgrad, Röstalter, gespeichertes Rezept), die Namen deiner Maschine und Mühle mit deren Mahlgrad-Skala sowie deine Zielwerte übertragen. Die Anfrage erfolgt direkt von deinem Gerät mit deinem eigenen Schlüssel; es gelten die Bedingungen deines Kontos beim jeweiligen Anbieter.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Anbieter</th><th>Sitz</th><th>Hinweis</th></tr>
+      <tr><td>Groq</td><td>Groq, Inc., USA</td><td>kostenloser Tarif</td></tr>
+      <tr><td>OpenRouter</td><td>OpenRouter, Inc., USA</td><td>leitet an das gewählte Modell weiter; Anbieter kostenloser Modelle können Anfragen ggf. zum Training nutzen</td></tr>
+      <tr><td>Google Gemini</td><td>Google Ireland Ltd. / Google LLC, USA</td><td>im kostenlosen Tarif können Anfragen zur Verbesserung genutzt werden</td></tr>
+      <tr><td>OpenAI (ChatGPT)</td><td>OpenAI Ireland Ltd. / OpenAI, L.L.C., USA</td><td></td></tr>
+      <tr><td>Anthropic (Claude)</td><td>Anthropic Ireland Ltd. / Anthropic PBC, USA</td><td></td></tr>
+    </table>
+    </div>
+    <p>Dabei können Daten in die USA übertragen werden. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du durch das Einschalten erteilst und jederzeit durch Ausschalten bzw. Entfernen des Schlüssels in den Einstellungen widerrufen kannst.</p>
+
+    <h3>3.5 Benachrichtigungen</h3>
+    <p>Erinnerungen (z. B. „Maschine ist vorgewärmt“, „Reinigung fällig“) werden ausschließlich lokal auf deinem Gerät geplant und angezeigt. Es wird kein Push-Dienst und kein Server verwendet.</p>
+
+    <h3>3.6 Berechtigungen der App</h3>
+    <ul>
+      <li><b>Internet und Netzwerkstatus</b> – für Google Drive, Shelly und KI-Anbieter sowie zum Finden der Steckdose im WLAN</li>
+      <li><b>Benachrichtigungen</b> – nur wenn du Erinnerungen einschaltest</li>
+      <li><b>Nach dem Neustart ausführen / Aktiv halten</b> – damit geplante Erinnerungen nach einem Neustart erhalten bleiben</li>
+      <li><b>Vibration</b> – spürbare Rückmeldung bei Knöpfen und Schaltern (haptisches Feedback, in den Einstellungen abschaltbar)</li>
+    </ul>
+
+    <h3>3.7 Bereitstellung über Google Play</h3>
+    <p>Die App wird über Google Play vertrieben. Beim Herunterladen und bei der Nutzung von Google Play verarbeitet Google Daten in eigener Verantwortung (z. B. Kontodaten, Installationen, Absturzberichte des Android-Systems). Es gilt die <a href="https://policies.google.com/privacy" rel="noopener">Datenschutzerklärung von Google</a>.</p>
+
+    <h3 id="teilen">3.8 Rezepte mit Freunden teilen (optional)</h3>
+    <p>Du kannst die Einstellungen eines Shots als Link teilen. Der Link enthält nur die Daten, die du in der Vorschau siehst: Bohne (Name, Rösterei, Röstgrad, Röstalter), Gerätenamen, Mahlgrad, Mengen, Zeit, Druck, Temperatur, Bewertung, Geschmack, auf Wunsch die Notiz und – nur wenn du ihn einträgst – deinen Vornamen. Die Daten stecken vollständig im Link selbst und werden auf keinem Server gespeichert. Verschickt wird der Link über die App, die du dafür auswählst (z. B. einen Messenger); dort gelten deren Bedingungen. Auf dieselbe Weise kannst du eine Packung teilen (Name, Rösterei, Röstgrad, Röstdatum, Packungsgröße, Notiz, Nachkauf-Link und gespeichertes Rezept). Eine <b>Shot-Karte</b> ist ein Bild, das die App lokal auf deinem Handy erzeugt; es wird nur verschickt, wenn du es über das Teilen-Menü an eine App deiner Wahl weitergibst. Empfängst du ein Rezept oder eine Packung und übernimmst sie, wird sie wie deine übrigen Einträge auf deinem Gerät bzw. in deinem Google Drive abgelegt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+    <h2 id="loeschen">4. Speicherdauer und Löschung</h2>
+    <p>Deine Daten bleiben gespeichert, bis du sie löschst:</p>
+    <ul>
+      <li>Einzelne Einträge löschst du in der App (lange drücken → Löschen oder nach links wischen).</li>
+      <li>Alle Daten auf dem Gerät entfernst du durch Löschen der App-Daten oder Deinstallation der App.</li>
+      <li>Die Daten in Google Drive löschst du, indem du den Ordner „Espressophie“ in deinem Google Drive löschst.</li>
+      <li>Den Zugriff der App auf dein Google-Konto widerrufst du unter <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>.</li>
+    </ul>
+
+    <h2 id="website">5. Diese Website</h2>
+    <p>Diese Website wird über GitHub Pages bereitgestellt (GitHub B.V., Niederlande / GitHub, Inc., USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten wie deine IP-Adresse, Datum und Uhrzeit sowie Browser-Informationen, um die Seite auszuliefern und die Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren Betrieb). Es gilt die <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>. Die Website verwendet keine Cookies, keine Analyse-Dienste und lädt keine Schriften oder Skripte von Drittanbietern; die Animationen der Seite laufen ausschließlich lokal in deinem Browser. Öffnest du einen geteilten Rezept-Link (<code>/r/#…</code>), wird das Rezept ebenfalls nur in deinem Browser angezeigt: Der Teil nach dem „#“ wird nicht an den Server übertragen. Auch der QR-Code-Generator für Röstereien (<code>/roestereien/</code>) arbeitet ausschließlich in deinem Browser: Die eingegebenen Angaben werden nicht gespeichert und nicht übertragen.</p>
+
+    <h2 id="rechte">6. Deine Rechte</h2>
+    <p>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21) sowie das Recht, eine Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen (Art. 7 Abs. 3). Da der Anbieter der App keine Daten von dir speichert, kannst du die meisten dieser Rechte direkt in der App bzw. in deinem Google-Konto ausüben. Außerdem hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO).</p>
+
+    <h2>7. Kinder</h2>
+    <p>Die App richtet sich nicht an Kinder unter 16 Jahren.</p>
+
+    <h2>8. Änderungen</h2>
+    <p>Wenn sich die App oder die rechtlichen Anforderungen ändern, wird diese Datenschutzerklärung angepasst. Es gilt die jeweils hier veröffentlichte Fassung.</p>
+
+    <h2 id="kontakt">9. Kontakt</h2>
+    <p>Fragen zum Datenschutz richtest du an: <a href="mailto:{{ site.kontakt.email }}">{{ site.kontakt.email }}</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand"><img src="assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches"><a href="./">Startseite</a><a href="roestereien/">Für Röstereien</a><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></nav>
+  </div>
+</footer>
+</body>
+</html>

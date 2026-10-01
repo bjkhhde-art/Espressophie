@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Espressophie – Verstehen, was in der Tasse passiert</title>
+  <meta name="description" content="Espressophie ist die Espresso-App für Siebträger: Shot-Timer, Geschmacks-Guide, Mahlgrad-Empfehlung pro Bohne und Mühle, KI-Barista und smarte Steckdose. Deine Daten bleiben in deinem Google Drive." />
+  <link rel="canonical" href="https://www.espressophie.de/" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Espressophie" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:url" content="https://www.espressophie.de/" />
+  <meta property="og:title" content="Espressophie" />
+  <meta property="og:description" content="Verstehen, was in der Tasse passiert. Die Espresso-App für Siebträger." />
+  <meta property="og:image" content="https://www.espressophie.de/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Espressophie – die Espresso-App für Siebträger" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="style.css?v=4" />
+  <script src="main.js?v=4" defer></script>
+</head>
+<body>
+
+<!-- Linien-Icons wie in der App (icons.js) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-shot" viewBox="0 0 24 24"><path d="M5 8h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 9.5h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M4 21h14"/><path d="M8.5 2.8c-.6.9.6 1.6 0 2.6M12 2.8c-.6.9.6 1.6 0 2.6"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-bean" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="5.6" ry="8.2" transform="rotate(32 12 12)"/><path d="M9.6 5.6c-1.4 3.6 4.2 9.2 4.8 12.8"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 16v-4M12 16V8M17 16v-7"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3.5v11"/><path d="m8 7 4-3.5L16 7"/><path d="M7 10.5H6a1.5 1.5 0 0 0-1.5 1.5v6.5A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5V12a1.5 1.5 0 0 0-1.5-1.5h-1"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3.5v8"/><path d="M7.2 6.5a7.5 7.5 0 1 0 9.6 0"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 20.5c3.6 0 6-2.4 6-5.8 0-3.7-3-5.6-3.6-9.2-1.8 1.4-2.7 3.2-2.7 5.2-1-.8-1.5-2-1.6-3.2C8 9.2 6 11.6 6 14.7c0 3.4 2.4 5.8 6 5.8z"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.5c.6 4.2 2.3 5.9 6.5 6.5-4.2.6-5.9 2.3-6.5 6.5-.6-4.2-2.3-5.9-6.5-6.5 4.2-.6 5.9-2.3 6.5-6.5z"/><path d="M18.5 15.5c.2 1.6.9 2.3 2.5 2.5-1.6.2-2.3.9-2.5 2.5-.2-1.6-.9-2.3-2.5-2.5 1.6-.2 2.3-.9 2.5-2.5z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2H5z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3.5V8M15 3.5V8"/><path d="M6.5 8h11v3.5a5.5 5.5 0 0 1-11 0z"/><path d="M12 17v3.5"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 9h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.3 0 1.9-.9 1.5-2-.5-1.3.3-2.5 1.7-2.5H17a3.5 3.5 0 0 0 3.5-3.5c0-5-3.8-9-8.5-9z"/><circle cx="7.8" cy="11" r="1.1" fill="currentColor"/><circle cx="10.5" cy="7.4" r="1.1" fill="currentColor"/><circle cx="15" cy="7.8" r="1.1" fill="currentColor"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 4a4.5 4.5 0 0 0-4.2 6.1L4.5 15.9a1.8 1.8 0 0 0 2.6 2.6l5.8-5.8A4.5 4.5 0 0 0 19 8.5l-2.7 2.7-2.6-.7-.7-2.6L15.7 5a4.5 4.5 0 0 0-1.2-1z"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7"/><path d="M12 13.5V10M10 3.5h4M18 7l1.3-1.3"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.8c3 3.8 5.5 6.9 5.5 10a5.5 5.5 0 0 1-11 0c0-3.1 2.5-6.2 5.5-10z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9.5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.6 1.5A4 4 0 0 1 17.5 18.5z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.5-2h6l1.5 2h2A1.5 1.5 0 0 1 20 8.5v9A1.5 1.5 0 0 1 18.5 19h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.5" r="3.5"/></symbol>
+  <symbol id="i-friends" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3.2"/><circle cx="16.5" cy="10" r="2.6"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><path d="M15 14.6c2.5-.4 4.7.8 5.5 3.6"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.8 20c.8-3.6 3.6-5.5 7.2-5.5s6.4 1.9 7.2 5.5"/></symbol>
+  <symbol id="i-haptic" viewBox="0 0 24 24"><rect x="8" y="3.5" width="8" height="17" rx="2"/><path d="M4.5 9v6M19.5 9v6M2 11v2M22 11v2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.4 3 8.2 7 9.5 4-1.3 7-5.1 7-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M4 2.8v18.4c0 .6.7 1 1.2.7l15.4-9.2c.5-.3.5-1.1 0-1.4L5.2 2.1C4.7 1.8 4 2.2 4 2.8z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="" /> Espressophie</a>
+    <button class="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    <nav class="nav" id="nav" aria-label="Hauptnavigation">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#ablauf">So geht's</a>
+      <a href="#barista">KI-Barista</a>
+      <a href="#maschine">Steckdose</a>
+      <a href="#daten">Deine Daten</a>
+      <a href="#faq">Fragen</a>
+      <span class="pill small" aria-disabled="true">Bald bei Google Play</span>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow intro" style="--d:0">Neu: Version 1.3</span>
+      <h1 class="display intro" style="--d:1">Espressophie<span class="dot">.</span></h1>
+      <p class="sub intro" style="--d:2">Verstehen, was in der Tasse passiert. Die Espresso-App, die aus jedem Shot lernt.</p>
+      <div class="cta intro" style="--d:3">
+        <span class="pill" aria-disabled="true"><svg class="ico gp"><use href="#i-play"/></svg>Bald bei Google Play</span>
+        <a class="more" href="#funktionen">Funktionen ansehen<svg class="ico"><use href="#i-chevron"/></svg></a>
+      </div>
+    </div>
+
+    <div class="hero-stage intro" style="--d:3" aria-hidden="true">
+      <div class="phone p-l"><picture><source srcset="assets/app/history-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/history-light.webp" alt="" width="390" height="844" /></picture></div>
+      <div class="phone p-r"><picture><source srcset="assets/app/rec-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/rec-light.webp" alt="" width="390" height="844" /></picture></div>
+      <div class="phone p-main"><picture><source srcset="assets/app/home-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/home-light.webp" alt="" width="390" height="844" fetchpriority="high" /></picture></div>
+      <div class="hero-badge hb-1"><span class="tile" style="--c:#34c759"><svg class="ico"><use href="#i-power"/></svg></span><span><b>Vorgewärmt</b><small>bereit für den Shot</small></span></div>
+      <div class="hero-badge hb-2"><span class="tile" style="--c:#5856d6"><svg class="ico"><use href="#i-sparkle"/></svg></span><span><b>Mahlgrad 9 beibehalten</b><small>Ethiopia Guji · 29 s</small></span></div>
+    </div>
+  </section>
+
+  <!-- ============ Statement ============ -->
+  <section class="statement">
+    <div class="wrap center">
+      <p data-words>Ein guter Espresso ist kein Zufall. Mahlgrad, Menge, Zeit und Geschmack – Espressophie merkt sich alles und sagt dir, was du beim nächsten Shot ändern solltest.</p>
+    </div>
+  </section>
+
+  <!-- ============ Funktionen (Bento) ============ -->
+  <section class="alt" id="funktionen">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Funktionen</span>
+        <h2 class="headline">Alles für deinen<br />besten Shot.</h2>
+        <p class="sub">Wie eine Siebträgermaschine: wenige Knöpfe, aber jeder sitzt.</p>
+      </div>
+
+      <div class="bento">
+        <article class="b b-4 b-shot b-dark" data-reveal>
+          <div class="txt">
+            <span class="tile" style="--c:#ff9500"><svg class="ico"><use href="#i-timer"/></svg></span>
+            <h3>Der große Shot-Timer.</h3>
+            <p>Start tippen, Pumpe läuft, Stopp tippen. Bohne, Mahlgrad und Mengen sind aus dem letzten Shot schon ausgefüllt – speichern, fertig.</p>
+          </div>
+          <div class="phone"><img src="assets/app/add-dark.webp" alt="Neuer Shot mit großem Timer, Bohnen-Auswahl und Barista-Tipp" width="390" height="844" loading="lazy" /></div>
+        </article>
+
+        <article class="b b-2" data-reveal style="--d:1">
+          <span class="tile" style="--c:var(--accent)"><svg class="ico"><use href="#i-target"/></svg></span>
+          <h3>Der ideale Mahlgrad.</h3>
+          <p>Berechnet aus deinen besten Shots – pro Bohne und pro Mühle.</p>
+          <div class="big">9–9,5<small>Mahlgrad</small></div>
+        </article>
+
+        <article class="b b-3" data-reveal>
+          <span class="tile" style="--c:#ff2d55"><svg class="ico"><use href="#i-cup"/></svg></span>
+          <h3>Wie hat er geschmeckt?</h3>
+          <p>Vier kurze Fragen statt Fachchinesisch. Daraus wird deine Bewertung – und der nächste Tipp.</p>
+          <div class="taste">
+            <div>Balance<i style="--v:50%"></i></div>
+            <div>Süße<i style="--v:92%"></i></div>
+            <div>Körper<i style="--v:66%"></i></div>
+            <div>Abgang<i style="--v:84%"></i></div>
+          </div>
+        </article>
+
+        <article class="b b-3" data-reveal style="--d:1">
+          <span class="tile" style="--c:#8e8e93"><svg class="ico"><use href="#i-wrench"/></svg></span>
+          <h3>Jede Mühle spricht ihre Sprache.</h3>
+          <p>Stufenlos, Stufen, Klicks oder Zahl plus Buchstabe – die App zählt so wie deine Mühle.</p>
+          <div class="chips"><span class="chip">Niche Zero</span><span class="chip">DF64</span><span class="chip">Eureka Mignon</span><span class="chip">Comandante C40</span><span class="chip">Baratza Sette · 5C</span><span class="chip">Fellow Opus</span><span class="chip">+ 9 weitere</span></div>
+        </article>
+
+        <article class="b b-2" data-reveal>
+          <span class="tile" style="--c:#a2845e"><svg class="ico"><use href="#i-bean"/></svg></span>
+          <svg class="ring" viewBox="0 0 64 64" style="--v:68" aria-hidden="true"><circle class="r-bg" cx="32" cy="32" r="26" /><circle class="r-val" cx="32" cy="32" r="26" pathLength="100" /></svg>
+          <h3>Bohnen im Blick.</h3>
+          <p>Röstalter, Restmenge, Preis pro Shot – und eine Erinnerung zum Nachkaufen.</p>
+          <div class="big">Tag 16<small>nach Röstung</small></div>
+        </article>
+
+        <article class="b b-2" data-reveal style="--d:1">
+          <span class="tile" style="--c:#30b0c7"><svg class="ico"><use href="#i-drop"/></svg></span>
+          <h3>Neue Bohne? Dial-In.</h3>
+          <p>Testshots laufen separat, bis das Rezept sitzt – deine Statistik bleibt sauber.</p>
+          <div class="big">3<small>Testshots</small></div>
+        </article>
+
+        <article class="b b-2" data-reveal style="--d:2">
+          <span class="tile" style="--c:#007aff"><svg class="ico"><use href="#i-chart"/></svg></span>
+          <h3>Statistik.</h3>
+          <p>Zeitziel, Bewertung und der Trend pro Bohne – auf einen Blick.</p>
+          <div class="big">71 %<small>im Zeitziel</small></div>
+        </article>
+
+        <article class="b b-2" data-reveal>
+          <span class="tile" style="--c:#ff3b30"><svg class="ico"><use href="#i-bell"/></svg></span>
+          <h3>Erinnerungen.</h3>
+          <p>„Vorgewärmt“, „Schaltet gleich ab“, „Reinigung fällig“, „Bohnen nachkaufen“ – jede einzeln schaltbar.</p>
+        </article>
+
+        <article class="b b-2" data-reveal style="--d:1">
+          <span class="tile" style="--c:#0a84ff"><svg class="ico"><use href="#i-cloud"/></svg></span>
+          <h3>Automatisches Backup.</h3>
+          <p>Jede Woche eine Sicherung in deinem Google Drive. Export und Import als Datei inklusive.</p>
+        </article>
+
+        <article class="b b-2" data-reveal style="--d:2">
+          <span class="tile" style="--c:#ff9f0a"><svg class="ico"><use href="#i-camera"/></svg></span>
+          <h3>Shot-Karte.</h3>
+          <p>Dein bester Shot als schönes Bild – fertig zum Teilen mit Freunden oder auf Instagram.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ So geht's (Sticky-Story) ============ -->
+  <section id="ablauf">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">So geht's</span>
+        <h2 class="headline">Shot für Shot besser.</h2>
+        <p class="sub">Espressophie lernt mit. Schon nach wenigen Shots weißt du, was funktioniert.</p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-stage" aria-hidden="true">
+          <div class="phone">
+            <div class="screens">
+              <picture class="active"><source srcset="assets/app/add-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/add-light.webp" alt="" loading="lazy" /></picture>
+              <picture><source srcset="assets/app/home-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/home-light.webp" alt="" loading="lazy" /></picture>
+              <picture><source srcset="assets/app/rec-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/rec-light.webp" alt="" loading="lazy" /></picture>
+              <picture><source srcset="assets/app/stats-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/stats-light.webp" alt="" loading="lazy" /></picture>
+            </div>
+          </div>
+          <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+        </div>
+
+        <ol class="steps">
+          <li class="step active" data-step="0">
+            <span class="tile" style="--c:#ff9500"><svg class="ico"><use href="#i-shot"/></svg></span>
+            <h3>Shot ziehen.</h3>
+            <p>Timer starten, Mengen eintragen, vier Fragen zum Geschmack. Mit smarter Steckdose wird die <b>Extraktionszeit sogar automatisch erkannt</b>.</p>
+            <div class="phone"><picture><source srcset="assets/app/add-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/add-light.webp" alt="Neuer Shot mit Timer" width="390" height="844" loading="lazy" /></picture></div>
+          </li>
+          <li class="step" data-step="1">
+            <span class="tile" style="--c:#5856d6"><svg class="ico"><use href="#i-sparkle"/></svg></span>
+            <h3>Tipp bekommen.</h3>
+            <p>Auf dem Startbildschirm steht sofort, <b>was du beim nächsten Shot ändern solltest</b> – mit Begründung. Feiner, gröber oder genau so lassen.</p>
+            <div class="phone"><picture><source srcset="assets/app/home-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/home-light.webp" alt="Startbildschirm mit Tipp für den nächsten Shot" width="390" height="844" loading="lazy" /></picture></div>
+          </li>
+          <li class="step" data-step="2">
+            <span class="tile" style="--c:var(--accent)"><svg class="ico"><use href="#i-target"/></svg></span>
+            <h3>Mahlgrad merken.</h3>
+            <p>Aus deinen besten Shots entsteht eine <b>Empfehlung pro Bohne und Mühle</b>. Neue Packung? Ein Tipp, und der Shot ist vorausgefüllt.</p>
+            <div class="phone"><picture><source srcset="assets/app/rec-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/rec-light.webp" alt="Mahlgrad-Empfehlungen je Bohne" width="390" height="844" loading="lazy" /></picture></div>
+          </li>
+          <li class="step" data-step="3">
+            <span class="tile" style="--c:#007aff"><svg class="ico"><use href="#i-chart"/></svg></span>
+            <h3>Fortschritt sehen.</h3>
+            <p>Verlauf und Statistik zeigen, wie deine Shots besser werden. So wird aus Bauchgefühl <b>reproduzierbarer Geschmack</b>.</p>
+            <div class="phone"><picture><source srcset="assets/app/stats-dark.webp" media="(prefers-color-scheme: dark)" /><img src="assets/app/stats-light.webp" alt="Statistik mit Trend pro Bohne" width="390" height="844" loading="lazy" /></picture></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KI-Barista ============ -->
+  <section class="alt chat-sec" id="barista">
+    <div class="wrap">
+      <div data-reveal>
+        <span class="eyebrow">KI-Barista · optional</span>
+        <h2 class="headline">Frag einfach<br />den Barista.</h2>
+        <p class="lead">Nach jedem Shot eine kurze Einschätzung und ein <b>konkreter nächster Schritt</b>. Und wenn du mehr wissen willst, fragst du einfach – in deinen Worten.</p>
+        <div class="providers">
+          <span class="chip free">Groq · kostenlos</span><span class="chip free">OpenRouter · kostenlos</span><span class="chip">Google Gemini</span><span class="chip">OpenAI</span><span class="chip">Anthropic</span>
+        </div>
+        <p class="fine">Du nutzt deinen eigenen Schlüssel beim Anbieter deiner Wahl. Name oder E-Mail werden nie übertragen.</p>
+      </div>
+      <div class="chat" data-chat data-reveal style="--d:1" aria-label="Beispiel-Unterhaltung mit dem KI-Barista">
+        <div class="bubble me" data-msg>Mein Shot läuft in 21 Sekunden durch und schmeckt sauer. Was tun?</div>
+        <div class="bubble ai" data-msg><b>Barista</b>Klassisch unterextrahiert. Stell die Niche feiner – von 12 auf 11 – und ziel auf 36 g in 27–30 s. Der Rest bleibt gleich.</div>
+        <div class="bubble me" data-msg>Und wenn er dann bitter wird?</div>
+        <div class="bubble ai typing" data-msg aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="bubble ai" data-msg><b>Barista</b>Dann einen halben Schritt zurück auf 11,5. Bitter plus lange Zeit heißt: etwas zu fein.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Smarte Steckdose ============ -->
+  <section class="machine-sec" id="maschine">
+    <div class="wrap">
+      <div class="machine-demo" data-reveal>
+        <div class="power" data-power-card data-lamp="off">
+          <span class="tile"><svg class="ico"><use href="#i-power"/></svg></span>
+          <div class="txt">
+            <b>Maschine</b>
+            <small data-power-status>Aus</small>
+            <div class="bar"><i></i></div>
+          </div>
+          <button class="switch" type="button" role="switch" aria-checked="false" aria-label="Maschine einschalten (Vorführung)"></button>
+        </div>
+        <div class="stats-row">
+          <div><b>3</b><small>Shots erkannt</small></div>
+          <div><b>0,41</b><small>kWh heute</small></div>
+          <div><b>0,13 €</b><small>Kosten heute</small></div>
+        </div>
+        <span class="hint">Tipp auf den Schalter – so sieht es in der App aus.</span>
+      </div>
+      <div data-reveal style="--d:1">
+        <span class="eyebrow">Smarte Steckdose · optional</span>
+        <h2 class="headline">Vorheizen,<br />bevor du aufstehst.</h2>
+        <p class="lead">Mit einer Shelly-Steckdose schaltest du die Maschine per App ein – zu Hause über WLAN, unterwegs über die Shelly Cloud. Espressophie sagt dir, wann sie bereit ist.</p>
+        <ul class="checks">
+          <li><svg class="ico"><use href="#i-check"/></svg><span><b>Vorgewärmt-Anzeige</b> anhand des Stromverbrauchs</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span><b>Shot-Erkennung:</b> jeder Pumpenlauf wird erkannt, die Zeit vorgeschlagen</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span><b>Verbrauch und Kosten</b> pro Tag, Sicherheitsabschaltung nach 2 Stunden</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span><b>Einrichtung in 4 Schritten</b> – die App spielt ihr Skript selbst auf die Steckdose</span></li>
+        </ul>
+        <p class="fine">Getestet mit dem Shelly Plug S Gen3. Shelly ist eine Marke der Shelly Group; Espressophie ist kein offizielles Shelly-Produkt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Design ============ -->
+  <section class="alt" id="design">
+    <div class="wrap center">
+      <div data-reveal>
+        <span class="eyebrow">Design</span>
+        <h2 class="headline">Hell. Dunkel.<br />Ganz deins.</h2>
+        <p class="sub">Espressophie folgt dem Erscheinungsbild deines Handys. Die Akzentfarbe wählst du selbst – probier es aus.</p>
+      </div>
+      <div class="looks" data-reveal style="--d:1">
+        <figure><div class="phone"><img src="assets/app/home-light.webp" alt="Startbildschirm im hellen Design" width="390" height="844" loading="lazy" /></div><figcaption>Hell</figcaption></figure>
+        <figure><div class="phone"><img src="assets/app/home-dark.webp" alt="Startbildschirm im dunklen Design" width="390" height="844" loading="lazy" /></div><figcaption>Dunkel</figcaption></figure>
+        <figure><div class="phone p-retro"><img src="assets/home.webp" alt="Startbildschirm im Retro-Stil mit Chrom-Manometern" width="540" height="1080" loading="lazy" /></div><figcaption>Retro – Chrom-Manometer</figcaption></figure>
+      </div>
+      <div data-reveal style="--d:2">
+        <div class="accents" role="radiogroup" aria-label="Akzentfarbe">
+          <button class="accent-dot" type="button" role="radio" aria-checked="true" data-accent="caramel" data-name="Karamell" style="--c:#c27a3e"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="espresso" data-name="Espresso" style="--c:#8d6a50"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="blue" data-name="Blau" style="--c:#007aff"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="green" data-name="Grün" style="--c:#30b450"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="red" data-name="Rot" style="--c:#ff3b30"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="indigo" data-name="Indigo" style="--c:#5856d6"></button>
+          <button class="accent-dot" type="button" role="radio" aria-checked="false" data-accent="graphite" data-name="Graphit" style="--c:#8e8e93"></button>
+        </div>
+        <p class="accent-name" aria-live="polite">Karamell</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Teilen ============ -->
+  <section id="teilen">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Teilen</span>
+        <h2 class="headline">Rezepte teilen.<br />Ohne Server.</h2>
+        <p class="sub">Dein bestes Rezept steckt komplett im Link. Freunde öffnen ihn – und übernehmen es mit einem Tipp.</p>
+      </div>
+      <div class="share-grid">
+        <article class="b" data-reveal>
+          <span class="tile" style="--c:#34c759"><svg class="ico"><use href="#i-friends"/></svg></span>
+          <h3>Für Freunde.</h3>
+          <p>Mahlgrad, Mengen, Zeit und Geschmack als Link – per WhatsApp, Mail oder wie du willst. Ohne App gibt es eine schöne Rezeptseite.</p>
+          <div class="link-demo"><svg class="ico"><use href="#i-share"/></svg><span>espressophie.de/r/#eyJ2IjoxLCJuIjoiRXRoaW9waWEgR3VqaSIs…</span></div>
+        </article>
+        <article class="b" data-reveal style="--d:1">
+          <span class="tile" style="--c:#a2845e"><svg class="ico"><use href="#i-bean"/></svg></span>
+          <h3>Für Röstereien.</h3>
+          <p>Ein QR-Code aufs Etikett: Bohne, Röstdatum und Startrezept landen mit einem Scan in der App eurer Kundschaft.</p>
+          <a class="more" href="roestereien/" style="margin-top:18px">QR-Code erstellen<svg class="ico"><use href="#i-chevron"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Deine Daten ============ -->
+  <section class="alt privacy" id="daten">
+    <div class="wrap">
+      <div data-reveal>
+        <svg class="shield ico" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:1.3"><use href="#i-shield"/></svg>
+        <h2 class="headline">Deine Daten.<br />Dein Google Drive.</h2>
+        <p class="sub center" style="margin:0 auto;max-width:34em">Espressophie hat keinen eigenen Server. Mit Google-Anmeldung liegen deine Daten im Ordner „Espressophie“ in <b>deinem</b> Drive – die App sieht nur ihre eigenen Dateien. Ohne Anmeldung bleibt alles auf dem Handy.</p>
+      </div>
+      <div class="facts">
+        <div class="b" data-reveal><h3>Keine Werbung.</h3><p>Nicht jetzt, nicht später.</p></div>
+        <div class="b" data-reveal style="--d:1"><h3>Kein Tracking.</h3><p>Keine Analyse-Dienste, keine Cookies – auch auf dieser Website nicht.</p></div>
+        <div class="b" data-reveal style="--d:2"><h3>Kein eigener Server.</h3><p>Daten gehen nur an Dienste, die du selbst einrichtest.</p></div>
+      </div>
+      <p data-reveal style="margin-top:32px"><a class="more" href="datenschutz.html">Zur Datenschutzerklärung<svg class="ico"><use href="#i-chevron"/></svg></a></p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <h2 class="headline">Häufige Fragen.</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details><summary>Wann gibt es die App?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Espressophie ist im Test. Die Veröffentlichung für Android im Google Play Store ist in Vorbereitung.</p></div></details>
+        <details><summary>Was kostet Espressophie?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Nichts. Nutzt du den optionalen KI-Barista mit einem kostenpflichtigen Anbieter, rechnet dieser direkt mit dir ab – meist deutlich unter einem Cent pro Tipp. Mit Groq oder OpenRouter geht es auch kostenlos.</p></div></details>
+        <details><summary>Brauche ich eine smarte Steckdose?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Nein. Shots, Bohnen, Empfehlungen und Statistik funktionieren ohne. Die Steckdose ergänzt Vorheizen, Shot-Erkennung und Verbrauchsanzeige.</p></div></details>
+        <details><summary>Funktioniert meine Mühle?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Ja. 15 verbreitete Mühlen kennt die App schon mit ihrer Skala. Jede andere legst du in wenigen Sekunden selbst an – stufenlos, mit Stufen, Klicks oder Zahl plus Buchstabe.</p></div></details>
+        <details><summary>Muss ich mich anmelden?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Nein. Ohne Anmeldung bleiben deine Daten nur auf dem Handy. Mit Google-Anmeldung werden sie in deinem eigenen Google Drive gesichert und sind auf allen deinen Geräten verfügbar.</p></div></details>
+        <details><summary>Welche Daten bekommt der KI-Barista?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Nur Shot-Daten (Bohne, Mahlgrad, Mengen, Zeit, Geschmack, Notiz), deine Zielwerte und dein Setup – kein Name, keine E-Mail. Die Anfrage geht direkt an den Anbieter, den du gewählt hast, mit deinem eigenen Schlüssel.</p></div></details>
+        <details><summary>Gibt es das Retro-Design noch?<svg class="ico"><use href="#i-chevron"/></svg></summary><div class="ans"><p>Ja. Unter Mehr → Design &amp; Bedienung schaltest du auf „Retro“ mit Chrom-Manometern wie an deiner Maschine.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Abschluss ============ -->
+  <section class="alt finale">
+    <div class="wrap" data-reveal>
+      <img class="app-icon" src="assets/icon.png" alt="" width="120" height="120" />
+      <h2 class="headline">Bereit für deinen<br /><span class="grad">besten Shot?</span></h2>
+      <p class="sub">Espressophie erscheint bald im Google Play Store.</p>
+      <span class="pill" aria-disabled="true"><svg class="ico gp"><use href="#i-play"/></svg>Bald bei Google Play</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="note">Espressophie ist ein privates, nicht-kommerzielles Projekt eines Hobby-Baristas. Screenshots zeigen Beispieldaten. Google Play ist eine Marke von Google LLC.</p>
+    <span class="foot-brand"><img src="assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches">
+      <a href="roestereien/">Für Röstereien</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

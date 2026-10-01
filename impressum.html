@@ -1,0 +1,58 @@
+---
+# Kontaktdaten kommen aus _config.yml
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Impressum – Espressophie</title>
+  <meta name="description" content="Impressum von Espressophie, der Espresso-App für Siebträger-Fans." />
+  <link rel="canonical" href="https://www.espressophie.de/impressum.html" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.png" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="style.css?v=4" />
+  <script src="main.js?v=4" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/icon.png" alt="" /> Espressophie</a>
+    <nav class="subnav" aria-label="Hauptnavigation"><a href="./">Startseite</a><a href="datenschutz.html">Datenschutz</a><a href="impressum.html" aria-current="page">Impressum</a></nav>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+    <h1>Impressum</h1>
+
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p class="card-addr">
+      {{ site.kontakt.name }}<br />
+      {{ site.kontakt.strasse }}<br />
+      {{ site.kontakt.plzOrt }}<br />
+      {{ site.kontakt.land }}
+    </p>
+
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:{{ site.kontakt.email }}">{{ site.kontakt.email }}</a></p>
+
+    <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+    <p>{{ site.kontakt.name }}, Anschrift wie oben</p>
+
+    <h2>Hinweis</h2>
+    <p>Espressophie ist ein privates, nicht-kommerzielles Projekt. Genannte Marken (z. B. Google, Shelly, OpenAI, Anthropic, Groq, OpenRouter) gehören ihren jeweiligen Inhabern; es besteht keine Partnerschaft mit diesen Unternehmen.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand"><img src="assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches"><a href="./">Startseite</a><a href="roestereien/">Für Röstereien</a><a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a></nav>
+  </div>
+</footer>
+</body>
+</html>
