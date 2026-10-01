@@ -7,11 +7,11 @@
    ========================================================== */
 
 window.KONTAKT = {
-  name:    "[Vor- und Nachname]",
-  strasse: "[Straße Hausnummer]",
-  plzOrt:  "[PLZ Ort]",
+  name:    "Benjamin Kupczyk",
+  strasse: "Kanzleistraße 4",
+  plzOrt:  "22609 Hamburg",
   land:    "Deutschland",
-  email:   "[E-Mail-Adresse]"
+  email:   "contact@espressophie.de"
 };
 
 
