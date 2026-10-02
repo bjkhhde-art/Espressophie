@@ -1,0 +1,235 @@
+---
+# E-Mail-Adresse kommt aus _config.yml
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mitmachen für Röstereien – Espressophie</title>
+  <meta name="description" content="Für Röstereien: kostenlos ins Espressophie-Verzeichnis und QR-Codes für eure Kaffeepackung – Bohne, Röstdatum und Startrezept landen mit einem Scan in der App eurer Kundschaft." />
+  <link rel="canonical" href="https://www.espressophie.de/roestereien/mitmachen/" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="/style.css?v=7" />
+  <script src="/main.js?v=7" defer></script>
+  <script src="/assets/qrcode.js"></script>
+  <style>
+    .rst .wrap { max-width: 1000px; }
+    .rst-head { text-align: center; margin-bottom: 48px; }
+    .rst-head .lead { margin: 16px auto 0; max-width: 36em; }
+    .rst-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0 0 40px; }
+    .rst-step { padding: 22px; border-radius: 22px; background: var(--card-2); }
+    .rst-step .tile { width: 36px; height: 36px; border-radius: 10px; font-size: 17px; font-weight: 700; margin-bottom: 12px; color: var(--on-accent); }
+    .rst-step b { display: block; margin-bottom: 4px; font-size: 17px; }
+    .rst-step > span:not(.tile) { display: block; color: var(--muted); font-size: 15px; }
+    .rst-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: start; }
+    .rst-form { display: grid; gap: 14px; padding: 24px; border-radius: 22px; background: var(--card-2); }
+    .rst-form h2 { display: flex; align-items: center; gap: 10px; margin: 8px 0 0; font-size: 21px; letter-spacing: -0.02em; }
+    .rst-form h2 .tile { width: 30px; height: 30px; border-radius: 8px; font-size: 18px; }
+    .rst-form .field input, .rst-form .field select, .rst-form .field textarea { background: var(--card); }
+    .rst-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .rst-row4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .rst-hint { margin: -4px 0 0; font-size: 13px; color: var(--faint); }
+    .rst-out { position: sticky; top: 76px; display: grid; gap: 14px; padding: 24px; border-radius: 22px; background: var(--card); box-shadow: var(--shadow); border: 0.5px solid var(--line); }
+    .rst-qr { display: grid; place-items: center; padding: 18px; border-radius: 16px; background: #fff; }
+    .rst-qr svg { width: 100%; max-width: 260px; height: auto; display: block; }
+    .rst-link { display: flex; gap: 8px; }
+    .rst-link .input { flex: 1; min-width: 0; min-height: 44px; font-size: 14px; color: var(--muted); }
+    .rst-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .rst-empty { margin: 0; padding: 30px 10px; color: #6e6e73; text-align: center; }
+    .rst-note { font-size: 13px; color: var(--faint); margin: 0; }
+    .join { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin: 0 0 56px; padding: 28px; border-radius: 22px; background: var(--card); box-shadow: var(--shadow); border: 0.5px solid var(--line); }
+    .join h2 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; }
+    .join p { margin: 0; color: var(--muted); }
+    .join ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); font-size: 15px; }
+    .qr-title { margin: 0 0 18px; text-align: center; font-size: 28px; letter-spacing: -0.025em; }
+    @media (max-width: 820px) {
+      .rst-steps, .rst-grid { grid-template-columns: 1fr; }
+      .rst-out { position: static; }
+      .rst-row4 { grid-template-columns: 1fr 1fr; }
+      .join { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="" /> Espressophie</a>
+    <nav class="subnav" aria-label="Hauptnavigation"><a href="/roestereien/">Verzeichnis</a><a href="/roestereien/mitmachen/" aria-current="page">Für Röstereien</a></nav>
+  </div>
+</header>
+
+<main class="page rst" id="join" data-email="{{ site.kontakt.email }}">
+  <div class="wrap">
+    <div class="rst-head">
+      <span class="eyebrow">Für Röstereien</span>
+      <h1 class="headline">Euer Espresso.<br />Direkt in der App.</h1>
+      <p class="lead">Zwei Wege, kostenlos und ohne Konto: Stellt euch im Röstereien-Verzeichnis vor – und bringt euer Startrezept per QR-Code direkt in die Espressophie-App eurer Kundschaft.</p>
+    </div>
+
+    <div class="join">
+      <div>
+        <h2>Ins Verzeichnis aufnehmen lassen</h2>
+        <p>Schreibt uns kurz – wir legen euren Eintrag an und schicken ihn euch vorher zur Freigabe.</p>
+        <ul><li>Name und Ort der Rösterei</li><li>Website, Shop und/oder Instagram</li><li>Ein, zwei Sätze über euch und eure Espresso-Bohnen</li><li>ob ihr QR-Codes auf euren Packungen nutzt</li></ul>
+      </div>
+      <a class="pill" id="joinMail" href="#">Eintrag anfragen</a>
+    </div>
+
+    <h2 class="qr-title">Euer Startrezept aufs Etikett</h2>
+    <p class="lead center" style="margin:-8px auto 28px;max-width:36em">Kundinnen und Kunden scannen den Code mit der Handykamera, und die Packung landet mit allen Angaben in ihrer Espressophie-App. Alle Angaben stecken im Code selbst – gespeichert wird nichts.</p>
+
+    <div class="rst-steps">
+      <div class="rst-step"><span class="tile">1</span><b>Angaben eintragen</b><span>Bohne, Röstdatum und euer Startrezept – alles außer dem Namen ist optional.</span></div>
+      <div class="rst-step"><span class="tile">2</span><b>QR-Code laden</b><span>Als SVG für den Druck oder als PNG – für Etikett, Flyer oder Shop.</span></div>
+      <div class="rst-step"><span class="tile">3</span><b>Kunden scannen</b><span>Mit App: Packung und Startrezept im Vorrat. Ohne App: eine schöne Rezeptseite.</span></div>
+    </div>
+
+    <div class="rst-grid">
+      <form class="rst-form" id="rstForm" autocomplete="off" onsubmit="return false">
+        <h2><span class="tile" style="--c:#a2845e"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="8.2" transform="rotate(32 12 12)"/><path d="M9.6 5.6c-1.4 3.6 4.2 9.2 4.8 12.8"/></svg></span>Bohne</h2>
+        <label class="field">Name der Bohne *<input id="fName" type="text" maxlength="60" placeholder="z. B. Ethiopia Guji Natural" /></label>
+        <div class="rst-row">
+          <label class="field">Rösterei<input id="fRoaster" type="text" maxlength="60" placeholder="z. B. Rösterei am Hafen" /></label>
+          <label class="field">Röstgrad
+            <select id="fLevel"><option value="">–</option><option>hell</option><option>mittel</option><option>dunkel</option></select>
+          </label>
+        </div>
+        <div class="rst-row">
+          <label class="field">Röstdatum<input id="fRoasted" type="date" /></label>
+          <label class="field">Packung in g<input id="fWeight" type="number" inputmode="numeric" min="0" placeholder="250" /></label>
+        </div>
+        <p class="rst-hint">Röstdatum leer lassen, wenn das Etikett für mehrere Röstungen gilt.</p>
+        <label class="field">Geschmack / Notiz<textarea id="fNotes" maxlength="200" placeholder="z. B. Beere, Jasmin, Zitrus"></textarea></label>
+        <label class="field">Shop-Link zum Nachkaufen<input id="fShop" type="url" inputmode="url" placeholder="https://…" /></label>
+
+        <h2><span class="tile" style="--c:var(--accent)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span>Startrezept <span class="rst-note">(optional)</span></h2>
+        <label class="field">Gemessen auf Mühle<input id="fGrinder" type="text" maxlength="60" placeholder="z. B. Niche Zero" /></label>
+        <div class="rst-row4">
+          <label class="field">Mahlgrad<input id="fGrind" type="text" inputmode="decimal" placeholder="14" /></label>
+          <label class="field">Input g<input id="fDose" type="number" inputmode="decimal" step="0.1" placeholder="18" /></label>
+          <label class="field">Output g<input id="fYield" type="number" inputmode="decimal" step="0.1" placeholder="36" /></label>
+          <label class="field">Zeit s<input id="fTime" type="number" inputmode="decimal" step="0.5" placeholder="28" /></label>
+        </div>
+        <p class="rst-hint">Der Mahlgrad gilt nur für dieselbe Mühle – die App übernimmt ihn nur, wenn die Kundin dieselbe Mühle hat, sonst nutzt sie Dosis, Output und Zeit.</p>
+      </form>
+
+      <aside class="rst-out" aria-live="polite">
+        <div id="rstQr" class="rst-qr"><p class="rst-empty">Name der Bohne eintragen – dann erscheint hier der QR-Code.</p></div>
+        <div class="rst-link">
+          <input class="input" id="rstLink" type="text" readonly aria-label="Link" placeholder="Link erscheint hier" />
+          <button class="pill ghost" type="button" id="rstCopy">Kopieren</button>
+        </div>
+        <div class="rst-btns">
+          <button class="pill" type="button" id="rstSvg">SVG laden</button>
+          <button class="pill ghost" type="button" id="rstPng">PNG laden</button>
+        </div>
+        <a class="more" id="rstPreview" href="#" target="_blank" rel="noopener" style="font-size:15px">So sieht es ohne App aus<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></a>
+        <p class="rst-note">Tipp: Druckt den Code mindestens 2 × 2 cm groß. Die Angaben werden nicht gespeichert – sie stecken nur im Code.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand"><img src="/assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches"><a href="/">Startseite</a><a href="/roestereien/">Röstereien</a><a href="/datenschutz.html">Datenschutz</a><a href="/impressum.html">Impressum</a></nav>
+  </div>
+</footer>
+
+<script>
+  // Eintrag anfragen: vorbereitete E-Mail
+  (function () {
+    var el = document.getElementById("join"), m = el.getAttribute("data-email") || "";
+    if (m.indexOf("{{") >= 0) m = "contact@espressophie.de";
+    document.getElementById("joinMail").href = "mailto:" + m + "?subject=" + encodeURIComponent("Eintrag ins Espressophie-Verzeichnis") + "&body=" + encodeURIComponent("Hallo,\n\nwir möchten ins Röstereien-Verzeichnis:\n\nName der Rösterei:\nOrt (PLZ, Stadt):\nWebsite:\nShop:\nInstagram:\nÜber uns (1–2 Sätze):\nUnsere Espresso-Bohnen:\nQR-Codes auf Packungen: ja / nein / geplant\n\nViele Grüße");
+  })();
+  // Gleiches Format wie die App: https://www.espressophie.de/r/#<Base64url(JSON)>, Typ x:"b" = Packung
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+    var num = function (v) { var n = parseFloat(String(v || "").replace(",", ".")); return isFinite(n) ? n : undefined; };
+    var txt = function (v) { v = String(v || "").trim(); return v || undefined; };
+    var b64url = function (str) {
+      var bytes = new TextEncoder().encode(str), bin = "";
+      for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    };
+    var url = "", svg = "";
+
+    function build() {
+      var name = txt($("fName").value);
+      if (!name) return null;
+      var shop = txt($("fShop").value);
+      if (shop && !/^https?:\/\//i.test(shop)) shop = "https://" + shop;
+      var g = $("fGrind").value.trim().toUpperCase().replace(",", ".");
+      var gm = g.match(/^(\d+(?:\.\d+)?)([A-Z])?$/);
+      var rc = { mg: gm ? parseFloat(gm[1]) : undefined, mgs: gm && gm[2] ? g : undefined, d: num($("fDose").value), y: num($("fYield").value), t: num($("fTime").value), g: txt($("fGrinder").value) };
+      Object.keys(rc).forEach(function (k) { if (rc[k] === undefined) delete rc[k]; });
+      var r = { v: 1, x: "b", n: name, r: txt($("fRoaster").value), rl: txt($("fLevel").value), rd: txt($("fRoasted").value),
+        w: num($("fWeight").value), no: txt($("fNotes").value), u: shop, rc: Object.keys(rc).length ? rc : undefined };
+      Object.keys(r).forEach(function (k) { if (r[k] === undefined) delete r[k]; });
+      return r;
+    }
+
+    function update() {
+      var r = build();
+      if (!r) {
+        url = ""; svg = "";
+        $("rstQr").innerHTML = '<p class="rst-empty">Name der Bohne eintragen – dann erscheint hier der QR-Code.</p>';
+        $("rstLink").value = "";
+        $("rstPreview").href = "#";
+        return;
+      }
+      url = "https://www.espressophie.de/r/#" + b64url(JSON.stringify(r));
+      var qr = qrcode(0, "M");
+      qr.addData(url);
+      qr.make();
+      svg = qr.createSvgTag({ cellSize: 6, margin: 4, scalable: true });
+      $("rstQr").innerHTML = svg;
+      $("rstLink").value = url;
+      $("rstPreview").href = url;
+    }
+
+    function download(name, href) {
+      var a = document.createElement("a");
+      a.href = href; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    function fileName(ext) {
+      return "espressophie-qr-" + ($("fName").value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "bohne") + "." + ext;
+    }
+
+    $("rstForm").addEventListener("input", update);
+    $("rstForm").addEventListener("change", update);
+    $("rstCopy").addEventListener("click", function () {
+      if (!url) return;
+      navigator.clipboard.writeText(url).then(function () { $("rstCopy").textContent = "Kopiert ✓"; setTimeout(function () { $("rstCopy").textContent = "Kopieren"; }, 1500); });
+    });
+    $("rstSvg").addEventListener("click", function () {
+      if (!svg) return;
+      download(fileName("svg"), URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })));
+    });
+    $("rstPng").addEventListener("click", function () {
+      if (!svg) return;
+      var img = new Image();
+      img.onload = function () {
+        var c = document.createElement("canvas");
+        c.width = 1200; c.height = 1200;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        download(fileName("png"), c.toDataURL("image/png"));
+      };
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    });
+  })();
+</script>
+</body>
+</html>
