@@ -107,7 +107,7 @@
     var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
     var url = function (u) { u = String(u || "").trim(); if (!u) return ""; if (!/^https?:\/\//i.test(u)) u = "https://" + u; return /^https?:\/\/[^\s"'<>]+$/i.test(u) ? u : ""; };
     var insta = function (h) { h = String(h || "").trim().replace(/^@/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/.*$/, ""); return /^[\w.]+$/.test(h) ? h : ""; };
-    var email = ($("dir").getAttribute("data-email") || "").indexOf("{{") >= 0 ? "" : $("dir").getAttribute("data-email");
+    var email = ($("dir").getAttribute("data-email") || "").indexOf("{" + "{") >= 0 ? "" : $("dir").getAttribute("data-email");
     var all = [], filter = "", q = "";
 
     var mail = function (subject, body) { return "mailto:" + (email || "contact@espressophie.de") + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); };

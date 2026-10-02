@@ -147,7 +147,7 @@
   // Eintrag anfragen: vorbereitete E-Mail
   (function () {
     var el = document.getElementById("join"), m = el.getAttribute("data-email") || "";
-    if (m.indexOf("{{") >= 0) m = "contact@espressophie.de";
+    if (m.indexOf("{" + "{") >= 0) m = "contact@espressophie.de";
     document.getElementById("joinMail").href = "mailto:" + m + "?subject=" + encodeURIComponent("Eintrag ins Espressophie-Verzeichnis") + "&body=" + encodeURIComponent("Hallo,\n\nwir möchten ins Röstereien-Verzeichnis:\n\nName der Rösterei:\nOrt (PLZ, Stadt):\nWebsite:\nShop:\nInstagram:\nÜber uns (1–2 Sätze):\nUnsere Espresso-Bohnen:\nQR-Codes auf Packungen: ja / nein / geplant\n\nViele Grüße");
   })();
   // Gleiches Format wie die App: https://www.espressophie.de/r/#<Base64url(JSON)>, Typ x:"b" = Packung
