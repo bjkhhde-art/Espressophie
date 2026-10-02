@@ -1,0 +1,176 @@
+---
+# Google-Client-ID kommt aus _config.yml
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auswertung – Espressophie</title>
+  <meta name="description" content="Werte deine Espressophie-Shots am großen Bildschirm aus: Bohnen und Röstereien vergleichen, Geschmacksprofil, beste Rezepte teilen, Kosten – direkt aus deinem Google Drive, ohne Server." />
+  <link rel="canonical" href="https://www.espressophie.de/auswertung/" />
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>document.documentElement.className = "js";</script>
+  <link rel="stylesheet" href="/style.css?v=7" />
+  <link rel="stylesheet" href="/auswertung/auswertung.css?v=1" />
+  <!-- Wichtig: Das Anmelde-Skript von Google wird NICHT hier geladen,
+       sondern erst, wenn jemand auf „Mit Google anmelden“ tippt (auswertung.js). -->
+  <script src="/main.js?v=7" defer></script>
+  <script src="/auswertung/auswertung.js?v=1" defer></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/assets/icon.png" alt="" /> Espressophie</a>
+    <nav class="subnav" aria-label="Hauptnavigation"><a href="/">Startseite</a><a href="/roestereien/">Röstereien</a><a href="/auswertung/" aria-current="page">Auswertung</a></nav>
+  </div>
+</header>
+
+<main id="webapp" data-client-id="{{ site.google_client_id }}">
+
+  <!-- ============ Vor der Anmeldung ============ -->
+  <section class="wa-start" id="waStart">
+    <div class="wrap">
+      <span class="tile wa-hero-tile" style="--c:var(--accent)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-4M12 16V8M17 16v-7"/></svg></span>
+      <span class="eyebrow">Auswertung</span>
+      <h1 class="headline">Deine Shots.<br />Verstanden.</h1>
+      <p class="sub">In der App trackst du. Hier blickst du zurück: Welche Bohne und welche Rösterei passen zu dir, wie schmeckst du am liebsten – und welches Rezept teilst du mit anderen?</p>
+
+      <div class="wa-login">
+        <button class="gsi-btn" type="button" id="waLogin">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span id="waLoginText">Mit Google anmelden</span>
+        </button>
+        <button class="pill ghost" type="button" id="waDemo">Beispieldaten ansehen</button>
+      </div>
+      <button class="wa-other" type="button" id="waOther" hidden>Anderes Konto verwenden</button>
+      <p class="wa-msg" id="waMsg" role="status" aria-live="polite"></p>
+
+      <div class="wa-facts">
+        <div><span class="tile" style="--c:#a2845e"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="8.2" transform="rotate(32 12 12)"/><path d="M9.6 5.6c-1.4 3.6 4.2 9.2 4.8 12.8"/></svg></span><b>Vergleichen.</b><span>Bohnen und Röstereien nebeneinander: Bewertung, Trefferquote, Dial-In-Aufwand und Preis pro Shot.</span></div>
+        <div><span class="tile" style="--c:#ff2d55"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/></svg></span><b>Geschmack verstehen.</b><span>Dein Profil aus Süße, Körper, Balance und Abgang – und welche Röstgrade dir am besten gelingen.</span></div>
+        <div><span class="tile" style="--c:#34c759"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.2"/><circle cx="16.5" cy="10" r="2.6"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><path d="M15 14.6c2.5-.4 4.7.8 5.5 3.6"/></svg></span><b>Rezepte teilen.</b><span>Dein bestes Rezept pro Bohne – mit dem Weg dorthin – als Link für Freunde.</span></div>
+      </div>
+      <p class="fine center">Das Anmelde-Skript von Google wird erst geladen, wenn du auf „Mit Google anmelden“ tippst. Die Auswertung liest nur die Datei, die die App in deinem Google Drive angelegt hat, und verändert nichts. <a href="/datenschutz.html#webansicht">Datenschutz</a></p>
+    </div>
+  </section>
+
+  <!-- ============ Nach der Anmeldung ============ -->
+  <section class="wa-dash" id="waDash" hidden>
+    <div class="wrap">
+      <div class="wa-bar">
+        <div class="wa-user" id="waUser"></div>
+        <div class="wa-actions">
+          <button class="pill ghost small" type="button" id="waReload">Aktualisieren</button>
+          <button class="pill ghost small" type="button" id="waCsv">CSV-Export</button>
+          <button class="pill small" type="button" id="waLogout">Abmelden</button>
+        </div>
+      </div>
+
+      <div class="seg" role="tablist" aria-label="Bereiche">
+        <button role="tab" aria-selected="true" data-tab="overview">Überblick</button>
+        <button role="tab" aria-selected="false" data-tab="compare">Bohnen &amp; Röstereien</button>
+        <button role="tab" aria-selected="false" data-tab="taste">Geschmack</button>
+        <button role="tab" aria-selected="false" data-tab="recipes">Rezepte</button>
+        <button role="tab" aria-selected="false" data-tab="costs">Kosten</button>
+      </div>
+
+      <!-- Überblick -->
+      <div class="wa-panel" data-panel="overview">
+        <div class="kpis" id="waKpis"></div>
+        <div class="highlights" id="waHighlights"></div>
+        <div class="wa-grid">
+          <article class="card wa-trend">
+            <div class="card-head">
+              <h2>Trend pro Bohne</h2>
+              <select class="input wa-select" id="waTrendBean" aria-label="Bohne für den Trend"></select>
+            </div>
+            <p class="card-sub" id="waTrendSub"></p>
+            <div id="waTrend" class="chart"></div>
+          </article>
+          <article class="card">
+            <h2>Shots pro Monat</h2>
+            <p class="card-sub">Säulen: Anzahl · Zahl darüber: Ø Bewertung</p>
+            <div id="waMonths" class="chart"></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Bohnen & Röstereien -->
+      <div class="wa-panel" data-panel="compare" hidden>
+        <article class="card">
+          <h2>Bohnen im Vergleich</h2>
+          <p class="card-sub">Sortiert nach Ø Bewertung. „Dial-In“ = Testshots, bis das Rezept saß.</p>
+          <div class="table-wrap"><table class="cmp" id="waBeanCmp"></table></div>
+        </article>
+        <article class="card">
+          <h2>Deine Röstereien</h2>
+          <p class="card-sub">Welche Rösterei passt zu deinem Geschmack?</p>
+          <div class="list" id="waRoasters"></div>
+          <a class="more wa-dir" href="/roestereien/">Neue Röstereien entdecken<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></a>
+        </article>
+      </div>
+
+      <!-- Geschmack -->
+      <div class="wa-panel" data-panel="taste" hidden>
+        <div class="wa-grid">
+          <article class="card">
+            <h2>Dein Geschmacksprofil</h2>
+            <p class="card-sub" id="waTasteSub">Durchschnitt deiner Angaben im Geschmacks-Guide.</p>
+            <div class="profile" id="waProfile"></div>
+          </article>
+          <article class="card">
+            <h2>Röstgrade</h2>
+            <p class="card-sub" id="waRoastSub"></p>
+            <div class="list" id="waRoast"></div>
+          </article>
+        </div>
+        <article class="card">
+          <h2>Deine Lieblings-Shots</h2>
+          <p class="card-sub">Die am besten bewerteten Shots – mit deinen Notizen.</p>
+          <div class="list" id="waFavs"></div>
+        </article>
+      </div>
+
+      <!-- Rezepte -->
+      <div class="wa-panel" data-panel="recipes" hidden>
+        <p class="card-sub center" style="margin-bottom:18px">Dein bestes Rezept pro Bohne und Mühle – und wie du dorthin gekommen bist. Teilen erzeugt denselben Link wie die App.</p>
+        <div class="recipe-grid" id="waRecipes"></div>
+      </div>
+
+      <!-- Kosten -->
+      <div class="wa-panel" data-panel="costs" hidden>
+        <div class="kpis" id="waCostKpis"></div>
+        <div class="wa-grid">
+          <article class="card">
+            <h2>Kosten pro Monat</h2>
+            <p class="card-sub">Bohnenkosten deiner Shots (Preis ÷ Packungsgewicht × Dosis).</p>
+            <div id="waCostMonths" class="chart"></div>
+          </article>
+          <article class="card">
+            <h2>Pro Rösterei</h2>
+            <p class="card-sub">Ø Preis pro Shot und Summe.</p>
+            <div class="list" id="waCostRoasters"></div>
+          </article>
+        </div>
+        <p class="fine center">Strom ist hier nicht enthalten – den Verbrauch zeigt die App, wenn eine smarte Steckdose verbunden ist.</p>
+      </div>
+
+      <p class="fine center" id="waSource"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="foot-brand"><img src="/assets/icon.png" alt="" /> © 2026 Espressophie</span>
+    <nav aria-label="Rechtliches"><a href="/">Startseite</a><a href="/roestereien/">Röstereien</a><a href="/datenschutz.html">Datenschutz</a><a href="/impressum.html">Impressum</a></nav>
+  </div>
+</footer>
+
+</body>
+</html>
