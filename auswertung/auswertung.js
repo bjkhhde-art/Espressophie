@@ -37,6 +37,25 @@
 
   /* ---------- Zustand ---------- */
   var S = { token: null, tokenClient: null, user: null, model: null, demo: false, trendBean: null };
+
+  /* Angemeldet bleiben: Google gibt Websites ohne Server nur einen Schlüssel,
+     der ca. 1 Stunde gilt. Den merken wir uns lokal, damit Neuladen und
+     Wiederkommen innerhalb dieser Zeit ohne erneute Anmeldung klappen. */
+  var SESSION_KEY = "ep_session";
+  var session = {
+    get: function () {
+      try {
+        var s = JSON.parse(localStorage.getItem(SESSION_KEY));
+        if (s && s.t && s.exp - Date.now() > 120000) return s; // mind. 2 Minuten Restlaufzeit
+      } catch (e) { /* egal */ }
+      session.clear();
+      return null;
+    },
+    set: function (token, seconds) {
+      try { localStorage.setItem(SESSION_KEY, JSON.stringify({ t: token, exp: Date.now() + (Number(seconds) || 3600) * 1000 })); } catch (e) { /* egal */ }
+    },
+    clear: function () { try { localStorage.removeItem(SESSION_KEY); } catch (e) { /* egal */ } }
+  };
   var acct = function () { return window.EPAccount || null; }; // Konto oben rechts (main.js)
 
   function msg(text, isError) {
@@ -81,6 +100,7 @@
           client_id: CLIENT_ID,
           scope: SCOPES,
           hint: known && known.email ? known.email : undefined, // „Weiter als …“: Google schlägt dieses Konto vor
+          prompt: known ? "" : undefined, // schon einmal zugestimmt → Google fragt nicht erneut
           callback: onToken,
           error_callback: onTokenError
         });
@@ -104,6 +124,7 @@
       return;
     }
     S.token = resp.access_token;
+    session.set(resp.access_token, resp.expires_in);
     S.demo = false;
     loadDrive();
   }
@@ -111,7 +132,7 @@
   /* ---------- Google Drive (nur lesen) ---------- */
   function api(url) {
     return fetch(url, { headers: { Authorization: "Bearer " + S.token } }).then(function (r) {
-      if (r.status === 401) throw new Error("Deine Anmeldung ist abgelaufen. Bitte melde dich neu an.");
+      if (r.status === 401) { session.clear(); S.token = null; throw new Error("Deine Anmeldung ist abgelaufen. Tippe auf den Knopf, um weiterzumachen."); }
       if (!r.ok) throw new Error("Google Drive antwortet mit Fehler " + r.status + ".");
       return r.json();
     });
@@ -150,7 +171,10 @@
       var file = res[1];
       if (!file) throw new Error("In deinem Google Drive wurden keine Espressophie-Daten gefunden. Melde dich in der App mit demselben Google-Konto an und warte, bis der Abgleich fertig ist.");
       return api(DRIVE + "/files/" + file.id + "?alt=media").then(function (data) { show(data, file.modifiedTime); });
-    }).catch(function (err) { msg(err.message, true); });
+    }).catch(function (err) {
+      if (!S.token) { $("waDash").hidden = true; $("waStart").hidden = false; renderLoginLabel(); } // Schlüssel abgelaufen
+      msg(err.message, true);
+    });
   }
 
   function loadDemo() {
@@ -163,6 +187,7 @@
   function logout(fromHeader) {
     var t = S.token, wasDemo = S.demo && fromHeader !== true;
     S.token = null; S.model = null; S.user = null; S.demo = false;
+    if (t) session.clear();
     if (t && window.google && google.accounts && google.accounts.oauth2) google.accounts.oauth2.revoke(t, function () {});
     // „Abmelden“ vergisst auch das Konto oben rechts; „Beenden“ der Beispieldaten nicht
     var A = acct(), forget = t || (A && A.get() && !wasDemo);
@@ -603,9 +628,14 @@
   }
   $("waOther").addEventListener("click", function () {
     if (acct()) acct().clear();
+    session.clear();
     S.tokenClient = null; // ohne Konto-Vorschlag neu anfragen
     renderLoginLabel();
     msg("");
   });
   renderLoginLabel();
+
+  // Innerhalb der Stunde wiedergekommen: Schlüssel ist noch gültig → direkt weiter, ohne Klick
+  var saved = session.get();
+  if (saved && CLIENT_ID) { S.token = saved.t; loadDrive(); }
 })();
