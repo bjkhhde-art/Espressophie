@@ -14,6 +14,16 @@ kontakt:
   email:   "contact@espressophie.de"
 
 
+# ==========================================================
+#   GOOGLE-ANMELDUNG für die Web-Ansicht (/app/)
+#   Client-ID des OAuth-Clients „Webanwendung“ aus der
+#   Google Cloud Console (endet auf .apps.googleusercontent.com).
+#   Leer lassen = Anmelde-Knopf zeigt „wird eingerichtet“.
+# ==========================================================
+
+google_client_id: ""
+
+
 # ---------- ab hier nichts ändern ----------
 url: "https://www.espressophie.de"
 exclude:
