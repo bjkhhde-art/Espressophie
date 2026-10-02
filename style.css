@@ -90,12 +90,18 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* ---------- Navigationsleiste (Glas, wie in der App) ---------- */
 .top {
   position: sticky; top: 0; z-index: 50;
-  background: var(--material);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 0.5px solid transparent;
   transition: border-color 0.3s;
 }
+/* Milchglas auf eigener Ebene: backdrop-filter direkt auf .top würde das
+   aufklappende Handy-Menü (position: fixed) auf die Höhe der Leiste einsperren */
+.top::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--material);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+body.nav-open .top::before { background: var(--bg); }
 .top.scrolled { border-bottom-color: var(--sep); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 52px; }
 .brand { display: flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; font-size: 19px; letter-spacing: -0.02em; }
@@ -442,7 +448,7 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
   }
   .nav.open { opacity: 1; visibility: visible; transform: none; }
   .nav a { opacity: 1; padding: 12px 0; border-radius: 0; letter-spacing: -0.03em; }
-  .nav .pill { margin: 24px 0 0; font-size: 17px; }
+  .nav .pill, .nav .pill.small { min-height: 50px; margin: 24px 0 0; font-size: 17px; }
   body.nav-open { overflow: hidden; }
 
   .hero { padding-top: 48px; }
