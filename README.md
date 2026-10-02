@@ -21,6 +21,7 @@ Statische Seite, ausgeliefert über GitHub Pages:
   Deshalb darf es **keine** Datei `.nojekyll` im Repository geben.
 - `.well-known/assetlinks.json` – öffnet Rezept-Links direkt in der App
 - `404.html`, `robots.txt`, `sitemap.xml`
+- `_tools/vorschau-server.js` – lokale Vorschau (`node _tools/vorschau-server.js`, dann http://localhost:8769); wird nicht veröffentlicht
 - `main.js` – Animationen, Konto oben rechts, Akzentfarbe
 - `style.css` – Design im Stil der App („Modern“), Hell/Dunkel folgt dem System
 - `assets/app/` – Screenshots der App (Beispieldaten), je hell und dunkel
