@@ -15,7 +15,7 @@ kontakt:
 
 
 # ==========================================================
-#   GOOGLE-ANMELDUNG für die Web-Ansicht (/app/)
+#   GOOGLE-ANMELDUNG für die Auswertung (/auswertung/)
 #   Client-ID des OAuth-Clients „Webanwendung“ aus der
 #   Google Cloud Console (endet auf .apps.googleusercontent.com).
 #   Leer lassen = Anmelde-Knopf zeigt „wird eingerichtet“.

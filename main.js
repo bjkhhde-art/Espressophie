@@ -12,6 +12,87 @@
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* egal */ } }
   };
 
+  /* ---------- Konto oben rechts ----------
+     Merkt sich nach der Anmeldung in der Auswertung nur Name und E-Mail
+     (lokal im Browser). Außerhalb der Auswertung wird nur der Anfangsbuchstabe
+     gezeigt – so lädt keine Seite etwas von Google, bevor man selbst tippt. */
+  var ACCT_KEY = "ep_account";
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var onApp = /\/auswertung\/?(index\.html)?$/.test(location.pathname);
+  var Account = {
+    active: false,      // true, solange die Auswertung echte Daten geladen hat
+    picture: null,      // Profilbild nur innerhalb der Auswertung
+    onSignIn: null,     // von auswertung.js gesetzt
+    onSignOut: null,    // von auswertung.js gesetzt
+    get: function () { try { var u = JSON.parse(localStorage.getItem(ACCT_KEY)); return u && (u.name || u.email) ? u : null; } catch (e) { return null; } },
+    set: function (u) { store.set(ACCT_KEY, JSON.stringify({ name: u.name || "", email: u.email || "" })); Account.picture = u.picture || null; renderAcct(); },
+    clear: function () { try { localStorage.removeItem(ACCT_KEY); } catch (e) { /* egal */ } Account.picture = null; Account.active = false; renderAcct(); },
+    render: function () { renderAcct(); }
+  };
+  window.EPAccount = Account;
+
+  var acctBox = null;
+  function avatar(u, big) {
+    var cls = "av" + (big ? " lg" : "");
+    if (Account.picture && onApp) return '<img class="' + cls + '" src="' + esc(Account.picture) + '" alt="" referrerpolicy="no-referrer" />';
+    return '<span class="' + cls + '" aria-hidden="true">' + esc((u.name || u.email || "?").trim().charAt(0).toUpperCase()) + "</span>";
+  }
+  function closePop() {
+    if (!acctBox) return;
+    $(".acct-pop", acctBox).hidden = true;
+    $(".acct-btn", acctBox).setAttribute("aria-expanded", "false");
+  }
+  function renderAcct() {
+    if (!acctBox) return;
+    var u = Account.get(), btn = $(".acct-btn", acctBox), pop = $(".acct-pop", acctBox);
+    btn.classList.toggle("has-user", Boolean(u));
+    if (u) {
+      btn.innerHTML = avatar(u);
+      btn.setAttribute("aria-label", "Konto: " + (u.name || u.email));
+      btn.setAttribute("aria-haspopup", "true");
+      pop.innerHTML = avatar(u, true) + "<b>" + esc(u.name || u.email) + "</b>" + (u.name && u.email ? "<small>" + esc(u.email) + "</small>" : "") +
+        '<div class="acct-actions">' +
+          (!onApp ? '<a class="pill" href="/auswertung/">Auswertung öffnen</a>' : !Account.active ? '<button class="pill" type="button" data-acct="in">Daten laden</button>' : "") +
+          '<button class="pill ghost" type="button" data-acct="out">Abmelden</button>' +
+        "</div>" +
+        (!onApp ? '<p class="note">Deine Daten bleiben in deinem Google Drive.</p>' : "");
+    } else {
+      btn.innerHTML = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.8 20c.8-3.6 3.6-5.5 7.2-5.5s6.4 1.9 7.2 5.5"/></svg><span>Anmelden</span>';
+      btn.setAttribute("aria-label", "Mit Google anmelden – Auswertung");
+      btn.removeAttribute("aria-haspopup");
+      pop.innerHTML = "";
+      closePop();
+    }
+  }
+  var bar = $(".top .wrap");
+  if (bar) {
+    acctBox = document.createElement("div");
+    acctBox.className = "acct";
+    acctBox.innerHTML = '<button class="acct-btn" type="button" aria-expanded="false"></button><div class="acct-pop" hidden></div>';
+    bar.appendChild(acctBox);
+    renderAcct();
+    $(".acct-btn", acctBox).addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (!Account.get()) {
+        if (onApp && Account.onSignIn) Account.onSignIn(); else location.href = "/auswertung/";
+        return;
+      }
+      var pop = $(".acct-pop", acctBox), open = pop.hidden;
+      pop.hidden = !open;
+      this.setAttribute("aria-expanded", open);
+    });
+    $(".acct-pop", acctBox).addEventListener("click", function (e) {
+      var a = e.target.closest("[data-acct]");
+      if (!a) return;
+      closePop();
+      if (a.dataset.acct === "in" && Account.onSignIn) Account.onSignIn();
+      if (a.dataset.acct === "out") { if (Account.onSignOut) Account.onSignOut(); else Account.clear(); }
+    });
+    document.addEventListener("click", function (e) { if (!acctBox.contains(e.target)) closePop(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePop(); });
+    window.addEventListener("storage", function (e) { if (e.key === ACCT_KEY) renderAcct(); }); // andere Tabs
+  }
+
   /* ---------- Akzentfarbe (wie in der App, merkt sich die Wahl) ---------- */
   function setAccent(id) {
     if (id && id !== "caramel") root.setAttribute("data-accent", id); else root.removeAttribute("data-accent");

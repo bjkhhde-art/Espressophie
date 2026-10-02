@@ -67,6 +67,7 @@
 
 /* ---------- Grundlagen ---------- */
 * { box-sizing: border-box; }
+[hidden] { display: none !important; } /* hidden-Attribut gewinnt immer */
 html { scroll-behavior: smooth; scroll-padding-top: 64px; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -103,7 +104,38 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 body.nav-open .top::before { background: var(--bg); }
 .top.scrolled { border-bottom-color: var(--sep); }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 52px; }
+.top .wrap { display: flex; align-items: center; gap: 8px; height: 52px; }
+.top .brand { margin-right: auto; }
+.top .nav, .top .subnav { order: 2; }
+.top .acct { order: 3; }
+.top .burger { order: 4; }
+
+/* ---------- Konto oben rechts (wie das Profilbild in der App) ---------- */
+.acct { position: relative; }
+.acct-btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px 0 8px;
+  border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 500;
+  color: var(--text); background: var(--fill); transition: transform 0.25s var(--spring), background-color 0.2s;
+}
+.acct-btn:active { transform: scale(0.94); }
+.acct-btn .ico { width: 20px; height: 20px; }
+.acct-btn.has-user { width: 34px; height: 34px; padding: 0; justify-content: center; background: none; }
+.av { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; object-fit: cover; font-size: 14px; font-weight: 600; color: var(--on-accent); background: var(--accent); box-shadow: 0 0 0 1px var(--line); transition: background-color 0.4s; }
+.av.lg { width: 56px; height: 56px; font-size: 22px; }
+.acct-pop {
+  position: absolute; right: -6px; top: calc(100% + 12px); z-index: 60; width: 290px; padding: 18px;
+  border-radius: 20px; background: var(--card); text-align: center;
+  box-shadow: 0 0 0 0.5px var(--line), 0 24px 60px rgba(0, 0, 0, 0.18);
+  animation: popIn 0.28s var(--spring) both; transform-origin: top right;
+}
+@keyframes popIn { from { opacity: 0; transform: scale(0.92) translateY(-6px); } }
+.acct-pop .av { margin: 0 auto 10px; }
+.acct-pop b { display: block; font-size: 17px; letter-spacing: -0.02em; }
+.acct-pop small { display: block; color: var(--muted); font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+.acct-pop .acct-actions { display: grid; gap: 8px; margin-top: 16px; }
+.acct-pop .pill { width: 100%; min-height: 40px; font-size: 15px; }
+.acct-pop .note { margin: 12px 0 0; font-size: 12px; color: var(--faint); }
+@media (prefers-color-scheme: dark) { .acct-pop { background: #2c2c2e; box-shadow: 0 0 0 0.5px var(--line), 0 24px 60px rgba(0, 0, 0, 0.6); } }
 .brand { display: flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; font-size: 19px; letter-spacing: -0.02em; }
 .brand:hover { text-decoration: none; color: var(--text); }
 .brand img { width: 28px; height: 28px; border-radius: 7px; }
@@ -388,7 +420,7 @@ footer nav a:first-child { border-left: 0; padding-left: 0; }
 .subnav a { color: var(--text); opacity: 0.8; padding: 8px 10px; }
 .subnav a:hover { opacity: 1; text-decoration: none; }
 .subnav a[aria-current] { opacity: 1; color: var(--accent); }
-@media (max-width: 440px) { .subnav a:first-child { display: none; } .subnav a { padding: 8px 7px; } }
+@media (max-width: 440px) { .subnav a:not([aria-current]) { display: none; } .subnav a { padding: 8px 7px; } }
 .page { padding: 64px 0 96px; }
 .page .wrap { max-width: 760px; }
 .page h1 { margin: 0 0 10px; font-size: clamp(40px, 7vw, 56px); line-height: 1.05; font-weight: 700; letter-spacing: -0.035em; overflow-wrap: anywhere; }
@@ -434,12 +466,8 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
   .b-4 { grid-column: span 6; }
 }
 
-/* ---------- Handy ---------- */
-@media (max-width: 760px) {
-  body { font-size: 16px; }
-  section { padding: 84px 0; }
-  .section-head { margin-bottom: 36px; }
-
+/* ---------- Menü wird zum Burger, sobald der Platz nicht mehr reicht ---------- */
+@media (max-width: 1060px) {
   .burger { display: block; }
   .nav {
     position: fixed; top: 52px; left: 0; right: 0; bottom: 0; flex-direction: column; align-items: stretch; gap: 0;
@@ -450,6 +478,16 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
   .nav a { opacity: 1; padding: 12px 0; border-radius: 0; letter-spacing: -0.03em; }
   .nav .pill, .nav .pill.small { min-height: 50px; margin: 24px 0 0; font-size: 17px; }
   body.nav-open { overflow: hidden; }
+}
+
+/* ---------- Handy ---------- */
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  section { padding: 84px 0; }
+  .section-head { margin-bottom: 36px; }
+
+  .acct-btn:not(.has-user) { width: 36px; height: 36px; padding: 0; justify-content: center; }
+  .acct-btn:not(.has-user) span { display: none; }
 
   .hero { padding-top: 48px; }
   .hero-stage { height: 560px; margin-top: 48px; }
