@@ -24,6 +24,18 @@ kontakt:
 google_client_id: "1092079980658-o31ldbk4itdqsr2a5sc04qrqjsvv3lvm.apps.googleusercontent.com"
 
 
+# ==========================================================
+#   SUPABASE (Röstereien-Verzeichnis)
+#   Projekt-Adresse und ÖFFENTLICHER Schlüssel (sb_publishable_…).
+#   Der darf auf der Website stehen – geschützt wird über die
+#   Zugriffsregeln der Datenbank. NIEMALS den secret/service_role-
+#   Schlüssel hier eintragen!
+# ==========================================================
+
+supabase_url: "https://zzxkdfwuspxaqzdbnluk.supabase.co"
+supabase_key: "sb_publishable_3vjlVlsrhgPIYWH0IWsWLA_LBxMThc_"
+
+
 # ---------- ab hier nichts ändern ----------
 url: "https://www.espressophie.de"
 exclude:

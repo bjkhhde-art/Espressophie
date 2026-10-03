@@ -12,11 +12,11 @@ Statische Seite, ausgeliefert über GitHub Pages:
   und vergleicht Bohnen und Röstereien, Geschmack, beste Rezepte (teilbar), Kosten.
   Das Google-Skript wird erst beim Klick auf „Mit Google anmelden“ geladen. `demo.json` = Beispieldaten.
 - `app/` – leitet auf `auswertung/` weiter (alte Adresse)
-- `roestereien/` – Röstereien-Verzeichnis; **Einträge in `roestereien/roestereien.json`** (siehe unten)
+- `roestereien/` – Röstereien-Verzeichnis; Einträge kommen aus der Supabase-Tabelle `roasters` (siehe unten und `_supabase/README.md`)
 - `roestereien/mitmachen/` – für Röstereien: Eintrag anfragen + QR-Code-Generator
 - `r/` – Seite für geteilte Rezepte und Packungen (Link aus App, Auswertung oder QR-Code)
 - `datenschutz.html`, `impressum.html` – Rechtliches
-- **`_config.yml` – Name, Adresse, E-Mail und Google-Client-ID (nur hier ändern)**.
+- **`_config.yml` – Name, Adresse, E-Mail, Google-Client-ID und Supabase-Adresse/öffentlicher Schlüssel (nur hier ändern)**.
   GitHub Pages schreibt die Werte beim Veröffentlichen fest in die Seiten.
   Deshalb darf es **keine** Datei `.nojekyll` im Repository geben.
 - `.well-known/assetlinks.json` – öffnet Rezept-Links direkt in der App
@@ -30,29 +30,11 @@ Keine Cookies, keine externen Schriften oder Skripte (Ausnahme: Google-Anmeldung
 
 ## Rösterei eintragen
 
-In `roestereien/roestereien.json` einen Eintrag in die Liste `roestereien` einfügen
-(Komma zwischen den Einträgen nicht vergessen). Nur `name` ist Pflicht:
-
-```json
-{
-  "name": "Name der Rösterei",
-  "plz": "20095",
-  "ort": "Hamburg",
-  "text": "Ein, zwei Sätze über die Rösterei.",
-  "website": "https://…",
-  "shop": "https://…",
-  "instagram": "@name",
-  "espresso": ["Bohne 1", "Bohne 2"],
-  "tags": ["Bio", "Direkthandel"],
-  "qr": true
-}
-```
-
-`qr: true` = die Rösterei druckt Espressophie-QR-Codes mit Startrezept auf ihre Packungen
-(wird im Verzeichnis hervorgehoben). Nur Röstereien eintragen, die zugestimmt haben.
+Im Supabase-Dashboard → **Table Editor → roasters** eine Zeile anlegen. Sichtbar auf der Website wird sie erst,
+wenn `status` auf `freigegeben` steht (nach Zustimmung der Rösterei). Felder: siehe `_supabase/README.md`.
 
 ## Später: Community
 
 Verzeichnis und Rezept-Links funktionieren ohne Server. Für eine echte Community
 (Profile, öffentliche Rezepte, Bewertungen) käme später ein Backend dazu –
-die Einträge in `roestereien.json` können dann übernommen werden.
+Grundlage (Tabellen `roasters`, `recipes`, `profiles`) steht bereits in Supabase.

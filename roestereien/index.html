@@ -59,7 +59,7 @@
   </div>
 </header>
 
-<main class="page" id="dir" data-email="{{ site.kontakt.email }}" style="padding-top:64px">
+<main class="page" id="dir" data-email="{{ site.kontakt.email }}" data-supabase-url="{{ site.supabase_url }}" data-supabase-key="{{ site.supabase_key }}" style="padding-top:64px">
   <div class="wrap" style="max-width:1080px">
     <div class="dir-head">
       <span class="eyebrow">Röstereien</span>
@@ -164,10 +164,17 @@
     });
     $("dirSearch").addEventListener("input", function (e) { q = e.target.value.trim().toLowerCase(); render(); });
 
-    fetch("/roestereien/roestereien.json", { cache: "no-cache" }).then(function (r) { return r.json(); })
-      .then(function (d) {
-        all = (d.roestereien || []).filter(function (r) { return r && r.name; })
-          .sort(function (a, b) { return (b.qr ? 1 : 0) - (a.qr ? 1 : 0) || String(a.name).localeCompare(String(b.name), "de"); });
+    // Einträge aus der Supabase-Tabelle „roasters“ (nur freigegebene sind öffentlich lesbar)
+    var cfg = function (k) { var v = $("dir").getAttribute(k) || ""; return v.indexOf("{" + "{") >= 0 ? "" : v; };
+    var API = cfg("data-supabase-url"), KEY = cfg("data-supabase-key");
+    var FIELDS = "name,plz,ort,beschreibung,website,shop,instagram,espresso_bohnen,tags,nutzt_qr";
+    fetch(API + "/rest/v1/roasters?select=" + FIELDS + "&status=eq.freigegeben&order=nutzt_qr.desc,name.asc", { headers: { apikey: KEY } })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (rows) {
+        all = rows.filter(function (r) { return r && r.name; }).map(function (r) {
+          return { name: r.name, plz: r.plz, ort: r.ort, text: r.beschreibung, website: r.website, shop: r.shop,
+            instagram: r.instagram, espresso: r.espresso_bohnen || [], tags: r.tags || [], qr: r.nutzt_qr };
+        });
         render();
       })
       .catch(function () { $("dirList").innerHTML = '<div class="dir-empty"><h2>Das Verzeichnis konnte nicht geladen werden.</h2><p>Bitte lade die Seite neu.</p></div>'; });
