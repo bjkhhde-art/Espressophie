@@ -406,6 +406,10 @@ footer nav a { color: var(--muted); padding: 0 10px; border-left: 1px solid var(
 footer nav a:first-child { border-left: 0; padding-left: 0; }
 .foot-brand { display: flex; align-items: center; gap: 8px; }
 .foot-brand img { width: 20px; height: 20px; border-radius: 5px; }
+.ig { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px 0 8px; border-radius: 999px; color: var(--text); background: var(--fill); font-size: 13px; font-weight: 500; transition: transform 0.25s var(--spring), color 0.2s; }
+.ig:hover { text-decoration: none; color: var(--accent); }
+.ig:active { transform: scale(0.95); }
+.ig .ico { width: 18px; height: 18px; }
 
 /* ---------- Einblenden beim Scrollen (federnd, sparsam) ---------- */
 .js [data-reveal] { opacity: 0; transform: translateY(40px); transition: opacity 0.9s var(--ease), transform 1s var(--ease); transition-delay: calc(var(--d, 0) * 90ms); }
