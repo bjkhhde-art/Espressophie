@@ -31,7 +31,9 @@ Keine Cookies, keine externen Schriften oder Skripte (Ausnahme: Google-Anmeldung
 ## Rösterei eintragen
 
 Im Supabase-Dashboard → **Table Editor → roasters** eine Zeile anlegen. Sichtbar auf der Website wird sie erst,
-wenn `status` auf `freigegeben` steht (nach Zustimmung der Rösterei). Felder: siehe `_supabase/README.md`.
+wenn `status` auf `freigegeben` steht. Aufgenommen werden nur öffentlich zugängliche, geschäftliche Angaben der Rösterei
+(eigene Website, Shop, Instagram). Will eine Rösterei etwas ändern oder nicht gelistet sein: sofort umsetzen
+(`status` auf `entwurf` setzen oder Zeile löschen). Felder: siehe `_supabase/README.md`.
 
 ## Später: Community
 

@@ -139,11 +139,16 @@ body.nav-open .top::before { background: var(--bg); }
 .brand { display: flex; align-items: center; gap: 9px; color: var(--text); font-weight: 600; font-size: 19px; letter-spacing: -0.02em; }
 .brand:hover { text-decoration: none; color: var(--text); }
 .brand img { width: 28px; height: 28px; border-radius: 7px; }
-.nav { display: flex; align-items: center; gap: 4px; font-size: 13px; }
+.nav { display: flex; align-items: center; gap: 4px; font-size: 13px; white-space: nowrap; }
 .nav a { color: var(--text); opacity: 0.8; padding: 8px 10px; border-radius: 999px; transition: opacity 0.2s, background 0.2s; }
 .nav a:hover { opacity: 1; text-decoration: none; }
 .nav a.on { opacity: 1; color: var(--accent); }
-.nav .pill { margin-left: 8px; opacity: 1; }
+.nav .pill { display: none; }
+/* Menü: Sprungmarken (auf dieser Seite) und eigene Seiten (mit Pfeil) klar getrennt */
+.nav-label { display: none; }
+.nav-sep { width: 1px; height: 18px; margin: 0 6px; background: var(--sep); }
+.nav a.nav-page { display: inline-flex; align-items: center; gap: 1px; padding-right: 6px; font-weight: 600; opacity: 1; }
+.nav a.nav-page .ico { width: 14px; height: 14px; stroke-width: 2.4; color: var(--accent); }
 .burger { display: none; position: relative; width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; color: var(--text); cursor: pointer; }
 .burger span { position: absolute; left: 13px; right: 13px; height: 1.5px; border-radius: 2px; background: currentColor; transition: transform 0.35s var(--ease); }
 .burger span:first-child { top: 18px; }
@@ -471,7 +476,7 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
 }
 
 /* ---------- Menü wird zum Burger, sobald der Platz nicht mehr reicht ---------- */
-@media (max-width: 1060px) {
+@media (max-width: 1120px) {
   .burger { display: block; }
   .nav {
     position: fixed; top: 52px; left: 0; right: 0; bottom: 0; flex-direction: column; align-items: stretch; gap: 0;
@@ -480,7 +485,16 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
   }
   .nav.open { opacity: 1; visibility: visible; transform: none; }
   .nav a { opacity: 1; padding: 12px 0; border-radius: 0; letter-spacing: -0.03em; }
-  .nav .pill, .nav .pill.small { min-height: 50px; margin: 24px 0 0; font-size: 17px; }
+  .nav .pill, .nav .pill.small { display: inline-flex; min-height: 50px; margin: 24px 0 0; font-size: 17px; }
+  .nav { overflow-y: auto; font-size: 24px; }
+  .nav a { padding: 9px 0; }
+  .nav-label { display: block; margin: 8px 0 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); }
+  .nav-sep { width: auto; height: 0.5px; margin: 20px 0 12px; }
+  .nav a.nav-page {
+    display: flex; justify-content: space-between; margin-top: 8px; padding: 14px 16px; border-radius: 14px;
+    font-size: 20px; letter-spacing: -0.02em; background: var(--fill);
+  }
+  .nav a.nav-page .ico { width: 20px; height: 20px; }
   body.nav-open { overflow: hidden; }
 }
 

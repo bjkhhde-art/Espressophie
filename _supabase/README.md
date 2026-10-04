@@ -22,8 +22,9 @@ freigegebene Röstereien und öffentliche Rezepte und können nichts anlegen; Nu
 
 `slug` (z. B. `roesterei-am-hafen`, nur Kleinbuchstaben/Zahlen/Bindestrich), `name`, optional
 `plz`, `ort`, `beschreibung`, `website`/`shop` (mit `https://`), `instagram` (ohne @),
-`espresso_bohnen`, `tags`, `nutzt_qr`. Erst sichtbar, wenn `status` auf `freigegeben` steht –
-nur nach Zustimmung der Rösterei.
+`espresso_bohnen`, `tags`, `nutzt_qr`. Erst sichtbar, wenn `status` auf `freigegeben` steht.
+Nur öffentlich zugängliche, geschäftliche Angaben verwenden (Website, Shop, Instagram der Rösterei).
+Widerspricht eine Rösterei oder will sie etwas ändern: umgehend umsetzen (Datenschutzerklärung 5.2).
 
 ## Vor echten Nutzerdaten
 

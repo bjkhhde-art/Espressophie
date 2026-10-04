@@ -44,6 +44,7 @@
     .dir-empty .tile { width: 56px; height: 56px; border-radius: 14px; font-size: 30px; margin-bottom: 14px; }
     .dir-empty h2 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; }
     .dir-empty p { margin: 0 auto; max-width: 30em; color: var(--muted); }
+    .dir-note { margin: 28px auto 0; max-width: 40em; text-align: center; font-size: 14px; line-height: 1.45; color: var(--muted); }
     .dir-cta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
     .dir-cta .b { min-height: 0; background: var(--card-2); box-shadow: none; }
     .dir-cta .pill { align-self: flex-start; margin-top: 18px; }
@@ -80,11 +81,13 @@
       <noscript><p class="dir-empty">Das Verzeichnis braucht JavaScript.</p></noscript>
     </div>
 
+    <p class="dir-note">Die Einträge stammen aus öffentlich zugänglichen Angaben der Röstereien und bedeuten keine Partnerschaft. Ihr seid eine Rösterei und möchtet etwas ändern oder nicht gelistet sein? <a id="dirFix" href="#">Kurze Mail genügt.</a></p>
+
     <div class="dir-cta">
       <div class="b">
         <span class="tile" style="--c:#34c759"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.2"/><circle cx="16.5" cy="10" r="2.6"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6"/><path d="M15 14.6c2.5-.4 4.7.8 5.5 3.6"/></svg></span>
         <h3>Deine Lieblingsrösterei fehlt?</h3>
-        <p>Schlag sie vor – mit Name, Ort und warum du ihren Espresso magst. Wir fragen nach, ob sie mitmachen möchte.</p>
+        <p>Schlag sie vor – mit Name, Ort und warum du ihren Espresso magst. Wir nehmen sie mit ihren öffentlichen Angaben auf.</p>
         <a class="pill ghost" id="dirSuggest" href="#">Rösterei vorschlagen</a>
       </div>
       <div class="b">
@@ -118,6 +121,9 @@
     var mail = function (subject, body) { return "mailto:" + (email || "contact@espressophie.de") + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body); };
     $("dirSuggest").href = mail("Rösterei-Vorschlag für Espressophie",
       "Hallo,\n\nich möchte diese Rösterei vorschlagen:\n\nName:\nOrt:\nWebsite oder Instagram:\nWarum ich ihren Espresso mag:\n\nViele Grüße");
+
+    $("dirFix").href = mail("Eintrag im Röstereien-Verzeichnis",
+      "Hallo,\n\nes geht um den Eintrag unserer Rösterei:\n\nName:\nBitte ändern / entfernen:\n\nViele Grüße");
 
     var BEAN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="8.2" transform="rotate(32 12 12)"/><path d="M9.6 5.6c-1.4 3.6 4.2 9.2 4.8 12.8"/></svg>';
     function card(r) {
